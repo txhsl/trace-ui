@@ -25,32 +25,41 @@ export default new Router({
                     meta: { title: '自定义图标' }
                 },
                 {
-                    path: '/table',
-                    component: resolve => require(['../components/page/BaseTable.vue'], resolve),
-                    meta: { title: '基础表格' }
+                    path: '/permission',
+                    component: resolve => require(['../components/page/PermissionTable.vue'], resolve),
+                    meta: { title: '权限一览' }
                 },
                 {
-                    path: '/tabs',
-                    component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                    meta: { title: 'tab选项卡' }
+                    path: '/role',
+                    component: resolve => require(['../components/page/RoleTable.vue'], resolve),
+                    meta: { title: '角色管理', permission: true }
                 },
                 {
-                    path: '/form',
-                    component: resolve => require(['../components/page/BaseForm.vue'], resolve),
-                    meta: { title: '基本表单' }
+                    path: '/property',
+                    component: resolve => require(['../components/page/PropertyTable.vue'], resolve),
+                    meta: { title: '属性管理', permission: true }
                 },
                 {
-                    // 富文本编辑器组件
-                    path: '/editor',
-                    component: resolve => require(['../components/page/VueEditor.vue'], resolve),
-                    meta: { title: '富文本编辑器' }
+                    path: '/read',
+                    component: resolve => require(['../components/page/ReadForm.vue'], resolve),
+                    meta: { title: '溯源查询' }
                 },
                 {
-                    // markdown组件
-                    path: '/markdown',
-                    component: resolve => require(['../components/page/Markdown.vue'], resolve),
-                    meta: { title: 'markdown编辑器' }    
+                    path: '/write',
+                    component: resolve => require(['../components/page/WriteForm.vue'], resolve),
+                    meta: { title: '存证提交' }
                 },
+                {
+                    path: '/message',
+                    component: resolve => require(['../components/page/MessageTabs.vue'], resolve),
+                    meta: { title: '消息中心' }
+                },
+                {
+                    path: '/transaction',
+                    component: resolve => require(['../components/page/TransactionTabs.vue'], resolve),
+                    meta: { title: '交易一览' }
+                },
+
                 {
                     // 图片上传组件
                     path: '/upload',
@@ -74,12 +83,6 @@ export default new Router({
                     path: '/dialog',
                     component: resolve => require(['../components/page/DragDialog.vue'], resolve),
                     meta: { title: '拖拽弹框' }
-                },
-                {
-                    // 权限页面
-                    path: '/permission',
-                    component: resolve => require(['../components/page/Permission.vue'], resolve),
-                    meta: { title: '权限测试', permission: true }
                 },
                 {
                     path: '/404',
