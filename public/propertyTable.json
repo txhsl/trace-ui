@@ -1,0 +1,11 @@
+{
+    "list": [{
+        "block": "111",
+        "name": "Producer_Operator",
+        "address": "0x82f845e76b88e2443f67416d93679ef82cfe7c2b"
+    }, {
+        "block": "222",
+        "name": "Storager_Operator",
+        "address": "0xbc532ce74c4c63cad14f7216b516d8907035beac"
+    }]
+}

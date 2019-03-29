@@ -9,6 +9,7 @@
             <div class="handle-box">
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="handleNew">新建角色</el-button>
+                <el-button type="primary" icon="search" @click="handleRegister">添加用户</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column prop="block" label="所在区块" sortable width="180">
@@ -25,15 +26,32 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="80px">
+        <el-dialog title="新建" :visible.sync="createVisible" width="30%">
+            <el-form ref="form" :model="create" label-width="80px">
                 <el-form-item label="角色名">
-                    <el-input v-model="form.name"></el-input>
+                    <el-input v-model="create.name"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
+                <el-button @click="createVisible = false">取 消</el-button>
                 <el-button type="primary" @click="applyNew">确 定</el-button>
+            </span>
+
+        </el-dialog>
+
+        <!-- 编辑弹出框 -->
+        <el-dialog title="注册" :visible.sync="registerVisible" width="30%">
+            <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="地址">
+                    <el-input v-model="form.address"></el-input>
+                </el-form-item>
+                <el-form-item label="角色">
+                    <el-input v-model="form.role"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="registerVisible = false">取 消</el-button>
+                <el-button type="primary" @click="applyRegister">确 定</el-button>
             </span>
 
         </el-dialog>
@@ -46,7 +64,7 @@
         name: 'basetable',
         data() {
             return {
-                url: './vuetable.json',
+                url: './roleTable.json',
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
@@ -54,10 +72,14 @@
                 select_status: '',
                 select_word: '',
                 del_list: [],
-                editVisible: false,
-                delVisible: false,
-                form: {
+                createVisible: false,
+                registerVisible: false,
+                create: {
                     name: ''
+                },
+                form: {
+                    address: '',
+                    role: ''
                 },
                 idx: -1
             }
@@ -107,14 +129,22 @@
             },
             handleNew(index, row) {
                 this.idx = index;
-                this.editVisible = true;
+                this.createVisible = true;
+            },
+            handleRegister(index, row) {
+                this.idx = index;
+                this.registerVisible = true;
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
             applyNew(){
                 this.$message.success('创建成功');
-                this.editVisible = false;
+                this.createVisible = false;
+            },
+            applyRegister(){
+                this.$message.success('添加成功');
+                this.registerVisible = false;
             }
         }
     }

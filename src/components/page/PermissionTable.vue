@@ -56,7 +56,7 @@
         name: 'basetable',
         data() {
             return {
-                url: './vuetable.json',
+                url: './permissionTable.json',
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
