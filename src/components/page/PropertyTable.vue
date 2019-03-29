@@ -13,9 +13,13 @@
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column prop="block" label="所在区块" sortable width="180">
                 </el-table-column>
+                <el-table-column prop="blockHash" label="区块哈希" width="300">
+                </el-table-column>
                 <el-table-column prop="name" label="属性名" width="160">
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
+                </el-table-column>
+                <el-table-column prop="txHash" label="交易哈希">
                 </el-table-column>
                 <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
@@ -100,7 +104,9 @@
                     if (!is_del) {
                         if (d.name.indexOf(this.select_word) > -1 ||
                                 d.address.indexOf(this.select_word) > -1 ||
-                                d.block.indexOf(this.select_word) > -1
+                                d.block.indexOf(this.select_word) > -1  ||
+                                d.blockHash.indexOf(this.select_word) > -1 ||
+                                d.txHash.indexOf(this.select_word) > -1
                         ) {
                             return d;
                         }
