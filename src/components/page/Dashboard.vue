@@ -33,7 +33,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
+                                    <div class="grid-num">{{roleCount}}</div>
                                     <div>角色数量</div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
+                                    <div class="grid-num">{{propertyCount}}</div>
                                     <div>属性数量</div>
                                 </div>
                             </div>
@@ -55,8 +55,8 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>链上文件数量</div>
+                                    <div class="grid-num">{{txCount}}</div>
+                                    <div>交易数量</div>
                                 </div>
                             </div>
                         </el-card>
@@ -78,6 +78,9 @@
         data() {
             return {
                 name: localStorage.getItem('ms_username'),
+                roleCount: 0,
+                propertyCount: 0,
+                txCount: 0,
                 data: [{
                         name: '2018/09/04',
                         value: 1083
@@ -121,12 +124,34 @@
         },
         computed: {
             role() {
-                return this.name === 'admin' ? '超级管理员' : '普通用户';
+                if (this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111') {
+                    return '系统管理员';
+                }
+                else if (["0xdb2bbab1d9eca60c937aa9c995664f86b3da2934", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145",
+                "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e", "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47",
+                 "0x40b00de2e7b694b494022eef90e874f5e553f996", "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a"].includes(this.name)) {
+                    return '角色管理员';
+                }
+                else {
+                    return '普通用户';
+                }
             }
         },
         created(){
             this.handleListener();
             this.changeDate();
+            this.$axios.get("/service/system/getRoleNames")
+                .then(res => {
+                    this.roleCount = res.data.length;
+                });
+            this.$axios.get("/service/system/getPropertyNames")
+                .then(res => {
+                    this.propertyCount = res.data.length;
+                });
+            this.$axios.get("/service/transaction/completed")
+                .then(res => {
+                    this.txCount = res.data.length;
+                });
         },
         activated(){
             this.handleListener();
