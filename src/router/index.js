@@ -32,12 +32,12 @@ export default new Router({
                 {
                     path: '/role',
                     component: resolve => require(['../components/page/RoleTable.vue'], resolve),
-                    meta: { title: '角色管理', permission: true }
+                    meta: { title: '角色管理', adminPermission: true }
                 },
                 {
                     path: '/property',
                     component: resolve => require(['../components/page/PropertyTable.vue'], resolve),
-                    meta: { title: '属性管理', permission: true }
+                    meta: { title: '属性管理', leaderPermission: true }
                 },
                 {
                     path: '/read',

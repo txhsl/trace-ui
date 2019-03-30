@@ -140,6 +140,8 @@
         created(){
             this.handleListener();
             this.changeDate();
+        },
+        mounted(){
             this.$axios.get("/service/system/getRoleNames")
                 .then(res => {
                     this.roleCount = res.data.length;

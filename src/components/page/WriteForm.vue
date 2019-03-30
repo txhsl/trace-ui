@@ -10,14 +10,14 @@
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="属性名">
-                        <el-select v-model="form.region" placeholder="请选择">
-                            <el-option key="bbk" label="步步高" value="bbk"></el-option>
-                            <el-option key="xtc" label="小天才" value="xtc"></el-option>
-                            <el-option key="imoo" label="imoo" value="imoo"></el-option>
+                        <el-select v-model="form.name" placeholder="请选择">
+                            <el-option v-for="item in properties" :value="item" :key="item" name="form.name">
+                                {{item}}
+                            </el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="数据ID">
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.id"></el-input>
                     </el-form-item>
                     <el-form-item label="存证内容">
                         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
@@ -40,14 +40,29 @@
             return {
                 form: {
                     name: '',
-                    region: '',
+                    id: '',
                     desc: '',
-                }
+                },
+                properties:[]
             }
+        },
+        mounted(){
+            this.$axios.get("/service/system/getPropertyNames")
+                .then(res => {
+                    this.properties = res.data;
+                });
         },
         methods: {
             onSubmit() {
-                this.$message.success('提交成功！');
+                this.$axios.post("/service/data/write", {
+                    id: this.form.id,
+                    propertyName: this.form.name,
+                    data: this.form.desc
+                }).then(res => {
+                    this.$message.success('提交成功！文件编号' + res.data);
+                }).catch(err => {
+                    this.$message.error('提交失败！');
+                })
             }
         }
     }
