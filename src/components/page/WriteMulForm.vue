@@ -18,14 +18,31 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="数据ID">
-                            <el-input v-model="item.id"></el-input>
+                        <el-form-item v-for="(single,dindex) in item.data" :key="dindex">
+                            <el-card>
+                                <el-form-item label="数据ID">
+                                    <el-input v-model="single.id"></el-input>
+                                </el-form-item>
+                                <el-form-item label="存证内容">
+                                    <el-input type="textarea" rows="5" v-model="single.desc"></el-input>
+                                </el-form-item>
+                            </el-card>
                         </el-form-item>
-                        <el-form-item label="存证内容">
-                        <el-input type="textarea" rows="5" v-model="item.desc"></el-input>
-                    </el-form-item>
+                        <el-form-item label=" ">
+                            <el-button type="success" circle @click="addId(index)"><i class="el-icon-lx-add"></i></el-button>
+                            <el-button type="danger" circle @click="deleteId(index)"><i class="el-icon-lx-move"></i></el-button>
+                        </el-form-item>
                     </el-form>
-                    <br>
+                </el-row>
+                <el-row>
+                    <el-form ref="form" label-width="80px">
+                        <el-form-item>
+                            <el-button-group>
+                                <el-button type="success" @click="addProperty()"><i class="el-icon-lx-add"></i>增加属性条目</el-button>
+                                <el-button type="danger" @click="deleteProperty()">减少属性条目<i class="el-icon-lx-move"></i></el-button>
+                            </el-button-group>
+                        </el-form-item>
+                    </el-form>
                 </el-row>
                 <el-form label-width="80px">
                     <el-form-item>
@@ -46,8 +63,10 @@
             return {
                 form: [{
                     name: '',
-                    id: '',
-                    desc: '',
+                    data: [{
+                        id: '',
+                        desc: ''
+                    }]
                 }],
                 properties:[]
             }
@@ -60,15 +79,46 @@
         },
         methods: {
             onSubmit() {
+                var swapper = function(content) {
+                    this.data = content
+                }
+                var req = {};
+                this.form.forEach(property => {
+                    var part = {};
+                    property.data.forEach(single => {
+                        part[single.id] = { data: single.desc };
+                    });
+                    req[property.name] = part;
+                });
+
                 this.$axios.post("/service/data/writeMultiple", {
-                    //id: this.form.id,
-                    //propertyName: this.form.name,
-                    //data: this.form.desc
+                    data: req,
                 }).then(res => {
                     this.$message.success('提交成功！文件编号' + res.data);
                 }).catch(err => {
                     this.$message.error('提交失败！');
                 })
+            },
+            addProperty() {
+                this.form.push({
+                    name: '',
+                    data: [{
+                        id: '',
+                        desc: ''
+                    }]
+                });
+            },
+            addId(index) {
+                this.form[index].data.push({
+                        id: '',
+                        desc: ''
+                    });
+            },
+            deleteProperty() {
+                this.form.pop();
+            },
+            deleteId(index) {
+                this.form[index].data.pop();
             }
         }
     }
