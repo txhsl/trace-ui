@@ -64,12 +64,32 @@
                         title: '数据管理',
                         subs: [
                             {
-                                index: 'write',
-                                title: '存证提交'
+                                index: '3-1',
+                                title: '存证提交',
+                                subs: [
+                                    {
+                                        index: 'write',
+                                        title: '单个提交'
+                                    },
+                                    {
+                                        index: 'writeMultiple',
+                                        title: '批量提交'
+                                    }
+                                ]
                             },
                             {
-                                index: 'read',
-                                title: '溯源查询'
+                                index: '3-2',
+                                title: '溯源查询',
+                                subs: [
+                                    {
+                                        index: 'read',
+                                        title: '单个查询'
+                                    },
+                                    {
+                                        index: 'readMultiple',
+                                        title: '批量查询'
+                                    }
+                                ]
                             }
                         ]
                     },

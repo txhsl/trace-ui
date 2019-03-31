@@ -45,9 +45,19 @@ export default new Router({
                     meta: { title: '溯源查询' }
                 },
                 {
+                    path: '/readMultiple',
+                    component: resolve => require(['../components/page/ReadMulForm.vue'], resolve),
+                    meta: { title: '批量查询' }
+                },
+                {
                     path: '/write',
                     component: resolve => require(['../components/page/WriteForm.vue'], resolve),
                     meta: { title: '存证提交' }
+                },
+                {
+                    path: '/writeMultiple',
+                    component: resolve => require(['../components/page/WriteMulForm.vue'], resolve),
+                    meta: { title: '批量提交' }
                 },
                 {
                     path: '/message',

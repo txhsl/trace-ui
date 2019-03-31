@@ -4,6 +4,7 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-calendar"></i> 数据管理</el-breadcrumb-item>
                 <el-breadcrumb-item>溯源查询</el-breadcrumb-item>
+                <el-breadcrumb-item>单个查询</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -25,7 +26,24 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div class="form-box">{{result}}</div>
+        </div>
+        <div class="container">
+            <div class="form-box">
+                <el-form ref="form" label-width="80px">
+                    <el-form-item label="查询结果">
+                        <el-table :data="result" border class="table" ref="multipleTable">
+                            <el-table-column prop="id" label="ID" sortable>
+                            </el-table-column>
+                            <el-table-column prop="name" label="属性名">
+                            </el-table-column>
+                            <el-table-column prop="data" label="内容">
+                            </el-table-column>
+                            <el-table-column prop="status" label="状态">
+                            </el-table-column>
+                        </el-table>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
 
     </div>
@@ -41,10 +59,7 @@
                     id: '',
                 },
                 properties:[],
-                result: {
-                    data: '',
-                    status: ''
-                }
+                result: []
             }
         },
         mounted(){
@@ -60,8 +75,12 @@
                     propertyName: this.form.name
                 }).then(res => {
                     this.$message.success('查询成功！');
-                    this.result.data = res.data.data;
-                    this.result.status = res.data.status;
+                    this.result = [{
+                        id: res.data.id,
+                        name: res.data.propertyName,
+                        data: res.data.data,
+                        status: res.data.status
+                    }];
                 }).catch(err => {
                     this.$message.error('查询失败！');
                 })
