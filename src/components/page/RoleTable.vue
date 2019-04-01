@@ -8,19 +8,17 @@
         <div class="container">
             <div class="handle-box">
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="handleNew">新建角色</el-button>
-                <el-button type="primary" icon="search" @click="handleRegister">添加用户</el-button>
+                <el-button type="primary" icon="search" @click="handleNew()">新建角色</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="block" label="所在区块" sortable width="180">
-                </el-table-column>
-                <el-table-column prop="blockHash" label="区块哈希" width="300">
-                </el-table-column>
                 <el-table-column prop="name" label="角色名" width="160">
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
                 </el-table-column>
-                <el-table-column prop="txHash" label="交易哈希">
+                <el-table-column label="操作" width="80" align="center">
+                    <template slot-scope="scope">
+                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">添加用户</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
@@ -103,10 +101,7 @@
                     }
                     if (!is_del) {
                         if (d.name.indexOf(this.select_word) > -1 ||
-                                d.address.indexOf(this.select_word) > -1 ||
-                                d.block.indexOf(this.select_word) > -1  ||
-                                d.blockHash.indexOf(this.select_word) > -1 ||
-                                d.txHash.indexOf(this.select_word) > -1
+                                d.address.indexOf(this.select_word) > -1
                         ) {
                             return d;
                         }
@@ -133,8 +128,7 @@
             filterTag(value, row) {
                 return row.tag === value;
             },
-            handleNew(index, row) {
-                this.idx = index;
+            handleNew() {
                 this.createVisible = true;
             },
             handleRegister(index, row) {
