@@ -14,12 +14,13 @@
                                 <span class="message-title">{{scope.row.title}}</span>
                             </template>
                         </el-table-column>
+                        <el-table-column prop="type" width="160"></el-table-column>
                         <el-table-column prop="target"></el-table-column>
                         <el-table-column prop="date" width="150"></el-table-column>
                         <el-table-column width="180">
                             <template slot-scope="scope">
-                                <el-button type="primary" size="small" @click="handleAccept(scope.$index)">接受</el-button>
-                                <el-button size="small" @click="handleIgnore(scope.$index)">忽略</el-button>
+                                <el-button type="primary" size="small" @click="handleAccept(scope.$index, scope.row)">接受</el-button>
+                                <el-button size="small" @click="handleIgnore(scope.$index, scope.row)">忽略</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -35,11 +36,12 @@
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
+                            <el-table-column prop="type" width="160"></el-table-column>
                             <el-table-column prop="target"></el-table-column>
                             <el-table-column prop="date" width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
-                                    <el-button type="danger" @click="handleDelAcp(scope.$index)">删除</el-button>
+                                    <el-button type="danger" @click="handleDelAcp(scope.$index, scope.row)">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -56,17 +58,40 @@
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
+                            <el-table-column prop="type" width="160"></el-table-column>
                             <el-table-column prop="target"></el-table-column>
                             <el-table-column prop="date" width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
-                                    <el-button type="primary" size="small" @click="handleAcceptIgn(scope.$index)">接受</el-button>
-                                    <el-button @click="handleDelIgn(scope.$index)">删除</el-button>
+                                    <el-button type="primary" size="small" @click="handleAcceptIgn(scope.$index, scope.row)">接受</el-button>
+                                    <el-button @click="handleDelIgn(scope.$index, scope.row)">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <div class="handle-row">
                             <el-button type="danger" @click="handleDeleteAllIgn()">删除全部</el-button>
+                        </div>
+                    </template>
+                </el-tab-pane>
+                <el-tab-pane :label="`已被通过(${receipts.length})`" name="fourth">
+                    <template v-if="message === 'fourth'">
+                        <el-table :data="receipts" :show-header="false" style="width: 100%">
+                            <el-table-column>
+                                <template slot-scope="scope">
+                                    <span class="message-title">{{scope.row.title}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="type" width="160"></el-table-column>
+                            <el-table-column prop="target"></el-table-column>
+                            <el-table-column prop="date" width="150"></el-table-column>
+                            <el-table-column width="180">
+                                <template slot-scope="scope">
+                                    <el-button @click="handleDelRcp(scope.$index, scope.row)">删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <div class="handle-row">
+                            <el-button type="danger" @click="handleDeleteAllRcp()">删除全部</el-button>
                         </div>
                     </template>
                 </el-tab-pane>
@@ -82,44 +107,99 @@
             return {
                 message: 'first',
                 showHeader: false,
-                unread: [{
-                    date: '2018-04-19 20:00:00',
-                    target: '0x23f9ec3e3916a8f04495165d7cdbe14eb5da5bee',
-                    title: 'Producer_Operator',
-                }],
-                accepted: [{
-                    date: '2018-04-19 20:00:00',
-                    target: '0x392f19458deb6872fc3ed4f4157fb1ef173c8149',
-                    title: 'Producer_Operator'
-                }],
-                ignored: [{
-                    date: '2018-04-19 20:00:00',
-                    target: '0x53888073d8cd1350b939e7f0e0776defebbe3a0a',
-                    title: 'Producer_Operator'
-                }]
+                unread: [],
+                accepted: [],
+                ignored: [],
+                receipts: []
             }
         },
         methods: {
             getMessages() {
-
+                this.$axios.get('/service/message/receive')
+                    .then(res => {
+                        let count = 0;
+                        res.data.forEach(message => {
+                            if (message.accepted) {
+                                this.accepted.push({
+                                    date: message.time,
+                                    target: message.permission.target,
+                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    title: message.permission.propertyName,
+                                    index: count++
+                                });
+                            }
+                            else if (message.read) {
+                                this.ignored.push({
+                                    date: message.time,
+                                    target: message.permission.target,
+                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    title: message.permission.propertyName,
+                                    index: count++
+                                });
+                            }
+                            else {
+                                this.unread.push({
+                                    date: message.time,
+                                    target: message.permission.target,
+                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    title: message.permission.propertyName,
+                                    index: count++
+                                });
+                            }
+                        });
+                    });
             },
-            handleAccept(index) {
+            getReceipts() {
+                this.$axios.get('/service/message/receipt')
+                    .then(res => {
+                        res.data.forEach(receipt => {
+                            this.receipts.push({
+                                date: receipt.time,
+                                target: receipt.permission.target,
+                                type: receipt.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                title: receipt.permission.propertyName
+                            });
+                        });
+                    });
+            },
+            handleAccept(index, row) {
                 const item = this.unread.splice(index, 1);
                 this.accepted = this.accepted.concat(item);
+                this.$axios.put('/service/message/accept/'+row.index)
+                    .then(res => {
+                        this.$message.success('处理成功');
+                    }).catch(err => {
+                        this.$message.error('处理失败');
+                    })
             },
-            handleAcceptIgn(index) {
+            handleAcceptIgn(index, row) {
                 const item = this.ignored.splice(index, 1);
                 this.accepted = this.accepted.concat(item);
+                this.$axios.put('/service/message/accept/'+row.index)
+                    .then(res => {
+                        this.$message.success('处理成功');
+                    }).catch(err => {
+                        this.$message.error('处理失败');
+                    })
             },
-            handleIgnore(index) {
+            handleIgnore(index, row) {
                 const item = this.unread.splice(index, 1);
                 this.ignored = this.ignored.concat(item);
+                this.$axios.put('/service/message/read/'+row.index)
+                    .then(res => {
+                        this.$message.success('处理成功');
+                    }).catch(err => {
+                        this.$message.error('处理失败');
+                    })
             },
-            handleDelAcp(index) {
+            handleDelAcp(index, row) {
                 const item = this.accepted.splice(index, 1);
             },
-            handleDelIgn(index) {
+            handleDelIgn(index, row) {
                 const item = this.ignored.splice(index, 1);
+            },
+            handleDelRcp(index, row) {
+                const item = this.receipt.splice(index, 1);
             },
             handleDeleteAll() {
                 this.accepted = [];
@@ -130,10 +210,14 @@
             },
             handleDeleteAllIgn() {
                 this.ignored = [];
+            },
+            handleDeleteAllRcp() {
+                this.receipt = [];
             }
         },
         created() {
             this.getMessages();
+            this.getReceipts();
         },
         computed: {
             unreadNum(){

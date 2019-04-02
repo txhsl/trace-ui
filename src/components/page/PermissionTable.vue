@@ -59,6 +59,7 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 tableData: [],
+                sortedData: [],
                 cur_page: 1,
                 row_per_page: 10,
                 multipleSelection: [],
@@ -76,7 +77,7 @@
         },
         computed: {
             data() {
-                var sorted = this.tableData.filter((d) => {
+                this.sortedData = this.tableData.filter((d) => {
                     let is_del = false;
                     for (let i = 0; i < this.del_list.length; i++) {
                         if (d.name === this.del_list[i].name) {
@@ -95,7 +96,7 @@
                     }
                 })
 
-                return sorted.slice(this.row_per_page*(this.cur_page-1), this.row_per_page*this.cur_page);
+                return this.sortedData.slice(this.row_per_page*(this.cur_page-1), this.row_per_page*this.cur_page);
             }
         },
         methods: {
@@ -108,9 +109,11 @@
                 var owned = [];
                 var managed = [];
                 var all = [];
-                this.$axios.get("/service/system/getPropertyNames")
+                this.$axios.get("/service/system/getProperties")
                     .then(res => {
                         all = res.data;
+                    }).catch(err => {
+                        this.$message.error('查询属性索引失败！');
                     });
                 this.$axios.get('/service/user/getOwned')
                     .then(res => {
@@ -125,18 +128,17 @@
                             temp.push(contract);
                         }
                         for(var property in all) {
-                            if (!temp.includes(all[property])) {
+                            if (!temp.includes(property)) {
                                 data.push({
-                                    name: all[property],
+                                    name: property,
                                     permission: '写入',
-                                    address: '',
+                                    address: all[property],
                                     status: '不可'
                                 });
                             }
                         }
                     }).catch(err => {
-                        this.$message.error('查询失败！');
-                        data = [];
+                        this.$message.error('查询拥有属性失败！');
                     });
                 this.$axios.get('/service/user/getManaged')
                     .then(res => {
@@ -151,18 +153,17 @@
                             temp.push(contract);
                         }
                         for(var property in all) {
-                            if (!temp.includes(all[property])) {
+                            if (!temp.includes(property)) {
                                 data.push({
-                                    name: all[property],
+                                    name: property,
                                     permission: '查询',
-                                    address: '',
+                                    address: all[property],
                                     status: '不可'
                                 });
                             }
                         }
                     }).catch(err => {
-                        this.$message.error('查询失败！');
-                        data = [];
+                        this.$message.error('查询管理属性失败！');
                     });
 
                 this.tableData = data;
@@ -203,7 +204,7 @@
                 return row.status === '可用';
             },
             calculPage() {
-                return this.tableData.length;
+                return this.sortedData.length;
             }
         }
     }
