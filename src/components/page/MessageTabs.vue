@@ -8,15 +8,15 @@
         <div class="container">
             <el-tabs v-model="message">
                 <el-tab-pane :label="`未读消息(${unread.length})`" name="first">
-                    <el-table :data="unread" :show-header="false" style="width: 100%">
-                        <el-table-column>
+                    <el-table :data="unread" style="width: 100%">
+                        <el-table-column label='标题'>
                             <template slot-scope="scope">
                                 <span class="message-title">{{scope.row.title}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="type" width="160"></el-table-column>
-                        <el-table-column prop="target"></el-table-column>
-                        <el-table-column prop="date" width="150"></el-table-column>
+                        <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                        <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                        <el-table-column prop="date" label='时间' width="150"></el-table-column>
                         <el-table-column width="180">
                             <template slot-scope="scope">
                                 <el-button type="primary" size="small" @click="handleAccept(scope.$index, scope.row)">接受</el-button>
@@ -30,15 +30,15 @@
                 </el-tab-pane>
                 <el-tab-pane :label="`已接受消息(${accepted.length})`" name="second">
                     <template v-if="message === 'second'">
-                        <el-table :data="accepted" :show-header="false" style="width: 100%">
-                            <el-table-column>
+                        <el-table :data="accepted" style="width: 100%">
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" width="160"></el-table-column>
-                            <el-table-column prop="target"></el-table-column>
-                            <el-table-column prop="date" width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
                                     <el-button type="danger" @click="handleDelAcp(scope.$index, scope.row)">删除</el-button>
@@ -52,15 +52,15 @@
                 </el-tab-pane>
                 <el-tab-pane :label="`已忽略请求(${ignored.length})`" name="third">
                     <template v-if="message === 'third'">
-                        <el-table :data="ignored" :show-header="false" style="width: 100%">
-                            <el-table-column>
+                        <el-table :data="ignored" style="width: 100%">
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" width="160"></el-table-column>
-                            <el-table-column prop="target"></el-table-column>
-                            <el-table-column prop="date" width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
                                     <el-button type="primary" size="small" @click="handleAcceptIgn(scope.$index, scope.row)">接受</el-button>
@@ -75,15 +75,15 @@
                 </el-tab-pane>
                 <el-tab-pane :label="`已被通过(${receipts.length})`" name="fourth">
                     <template v-if="message === 'fourth'">
-                        <el-table :data="receipts" :show-header="false" style="width: 100%">
-                            <el-table-column>
+                        <el-table :data="receipts" style="width: 100%">
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" width="160"></el-table-column>
-                            <el-table-column prop="target"></el-table-column>
-                            <el-table-column prop="date" width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
                                     <el-button @click="handleDelRcp(scope.$index, scope.row)">删除</el-button>
@@ -123,7 +123,7 @@
                                 this.accepted.push({
                                     date: message.time,
                                     target: message.permission.target,
-                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    type: this.localize(message.type, message.permission.isRead),
                                     title: message.permission.propertyName,
                                     index: count++
                                 });
@@ -132,7 +132,7 @@
                                 this.ignored.push({
                                     date: message.time,
                                     target: message.permission.target,
-                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    type: this.localize(message.type, message.permission.isRead),
                                     title: message.permission.propertyName,
                                     index: count++
                                 });
@@ -141,7 +141,7 @@
                                 this.unread.push({
                                     date: message.time,
                                     target: message.permission.target,
-                                    type: message.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                    type: this.localize(message.type, message.permission.isRead),
                                     title: message.permission.propertyName,
                                     index: count++
                                 });
@@ -156,7 +156,7 @@
                             this.receipts.push({
                                 date: receipt.time,
                                 target: receipt.permission.target,
-                                type: receipt.permission.isRead ? 'Read Permission' : 'Write Permission',
+                                type: this.localize(receipt.type, receipt.permission.isRead),
                                 title: receipt.permission.propertyName
                             });
                         });
@@ -213,6 +213,21 @@
             },
             handleDeleteAllRcp() {
                 this.receipt = [];
+            },
+            localize(type, isRead) {
+                switch(type) {
+                    case 'Property':
+                        return '属性申请';
+                    case 'Role':
+                        return '角色申请';
+                    case 'Permission':
+                        if(isRead)
+                            return '查询权限申请';
+                        else
+                            return '写入权限申请';
+                    default:
+                        return '';
+                }
             }
         },
         created() {

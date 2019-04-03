@@ -69,7 +69,8 @@
                 del_list: [],
                 editVisible: false,
                 delVisible: false,
-                idx: -1
+                idx: -1,
+                select_row: {}
             }
         },
         created() {
@@ -176,6 +177,7 @@
             },
             handleApply(index, row) {
                 this.idx = index;
+                this.select_row = row;
                 this.delVisible = true;
             },
             handleSelectionChange(val) {
@@ -183,14 +185,14 @@
             },
             applyRow(){
                 var url = '';
-                if (row.permission==='查询') {
+                if (this.select_row.permission==='查询') {
                     url = '/service/user/requestReader';
                 }
                 else {
                     url = '/service/user/requestWriter';
                 }
                 this.$axios.post(url, {
-                    propertyName: row.name,
+                    propertyName: this.select_row.name,
                     target: this.name
                 }).then(res => {
                     this.$message.success('申请成功');

@@ -11,15 +11,9 @@
                 <el-button type="primary" icon="search" @click="handleNew">新建属性</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="block" label="所在区块" sortable width="180">
-                </el-table-column>
-                <el-table-column prop="blockHash" label="区块哈希" width="300">
-                </el-table-column>
-                <el-table-column prop="name" label="属性名" width="160">
+                <el-table-column prop="name" label="属性名" sortable>
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
-                </el-table-column>
-                <el-table-column prop="txHash" label="交易哈希">
                 </el-table-column>
                 <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
@@ -28,7 +22,7 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="calculPage()">
                 </el-pagination>
             </div>
         </div>
@@ -50,8 +44,18 @@
 
         <el-dialog title="授权" :visible.sync="assignVisible" width="30%">
             <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="角色地址">
-                    <el-input v-model="form.address"></el-input>
+                <el-form-item label="授权角色">
+                    <el-select v-model="form.name">
+                        <el-option v-for="(address, name) in roles" :value="name" :key="name" name="form.name">
+                                {{name}}
+                            </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="权限类型">
+                    <el-select v-model="form.type">
+                        <el-option key="1" label="查询" value="查询"></el-option>
+                        <el-option key="2" label="写入" value="写入"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
 
@@ -69,9 +73,11 @@
         name: 'basetable',
         data() {
             return {
-                url: './PropertyTable.json',
+                name: localStorage.getItem('ms_username'),
                 tableData: [],
+                sortedData: [],
                 cur_page: 1,
+                row_per_page: 10,
                 multipleSelection: [],
                 select_cate: '',
                 select_status: '',
@@ -83,8 +89,10 @@
                     name: ''
                 },
                 form: {
-                    address: ''
+                    name: '',
+                    type: ''
                 },
+                roles: [],
                 idx: -1
             }
         },
@@ -93,7 +101,7 @@
         },
         computed: {
             data() {
-                return this.tableData.filter((d) => {
+                this.sortedData = this.tableData.filter((d) => {
                     let is_del = false;
                     for (let i = 0; i < this.del_list.length; i++) {
                         if (d.name === this.del_list[i].name) {
@@ -103,15 +111,14 @@
                     }
                     if (!is_del) {
                         if (d.name.indexOf(this.select_word) > -1 ||
-                                d.address.indexOf(this.select_word) > -1 ||
-                                d.block.indexOf(this.select_word) > -1  ||
-                                d.blockHash.indexOf(this.select_word) > -1 ||
-                                d.txHash.indexOf(this.select_word) > -1
+                                d.address.indexOf(this.select_word) > -1
                         ) {
                             return d;
                         }
                     }
                 })
+
+                return this.sortedData.slice(this.row_per_page*(this.cur_page-1), this.row_per_page*this.cur_page);
             }
         },
         methods: {
@@ -121,11 +128,20 @@
                 this.getData();
             },
             getData() {
-                this.$axios.get(this.url, {
-                    page: this.cur_page
-                }).then((res) => {
-                    this.tableData = res.data.list;
-                })
+                this.$axios.get('/service/user/getOwned')
+                    .then((res) => {
+                        for(var contract in res.data) {
+                            this.tableData.push({
+                                name: contract,
+                                address: res.data[contract]
+                            });
+                        }
+                    })
+
+                this.$axios.get('/service/system/getRoles')
+                    .then(res => {
+                        this.roles = res.data;
+                    })
             },
             formatter(row, column) {
                 return row.address;
@@ -145,12 +161,37 @@
                 this.multipleSelection = val;
             },
             applyNew(){
-                this.$message.success('创建成功');
+                this.$axios.post('/service/user/requestProperty', {
+                    propertyName: this.create.name,
+                    target: this.name
+                }).then(res => {
+                    this.$message.success('请求成功');
+                }).catch(err => {
+                    this.$message.error('请求失败');
+                })
                 this.createVisible = false;
             },
             applyAssign(){
-                this.$message.success('授权成功');
+                var url = '';
+                if (this.form.type == '查询') {
+                    url = '/service/user/permitReader';
+                }
+                else {
+                    url = '/service/user/permitWriter';
+                }
+                this.$axios.post(url, {
+                    propertyName: this.tableData[this.idx].name,
+                    target: this.roles[this.form.name]
+                }).then(res => {
+                    this.$message.success('授权成功');
+                }).catch(err => {
+                    this.$message.error('授权失败');
+                })
+
                 this.assignVisible = false;
+            },
+            calculPage() {
+                return this.sortedData.length;
             }
         }
     }
