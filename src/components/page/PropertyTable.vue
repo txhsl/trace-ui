@@ -70,7 +70,6 @@
 
 <script>
     export default {
-        name: 'basetable',
         data() {
             return {
                 name: localStorage.getItem('ms_username'),

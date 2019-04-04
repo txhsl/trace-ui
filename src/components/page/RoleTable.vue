@@ -15,9 +15,9 @@
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
                 </el-table-column>
-                <el-table-column label="操作" width="80" align="center">
+                <el-table-column label="操作" width="120" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">添加用户</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled()">添加用户</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -63,10 +63,9 @@
 
 <script>
     export default {
-        name: 'basetable',
         data() {
             return {
-                url: './roleTable.json',
+                name: localStorage.getItem('ms_username'),
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
@@ -116,10 +115,14 @@
                 this.getData();
             },
             getData() {
-                this.$axios.get(this.url, {
-                    page: this.cur_page
-                }).then((res) => {
-                    this.tableData = res.data.list;
+                this.$axios.get('/service/system/getRoles')
+                .then((res) => {
+                   for(var role in res.data) {
+                            this.tableData.push({
+                                name: role,
+                                address: res.data[role]
+                            });
+                        }
                 })
             },
             formatter(row, column) {
@@ -139,12 +142,28 @@
                 this.multipleSelection = val;
             },
             applyNew(){
-                this.$message.success('创建成功');
+                this.$axios.post('/service/system/requestRole', {
+                    name: this.create.name
+                }).then(res => {
+                    this.$message.success('请求成功');
+                }).catch(err => {
+                    this.$message.error('请求失败');
+                })
                 this.createVisible = false;
             },
             applyRegister(){
-                this.$message.success('添加成功');
+                this.$axios.post('/service/system/register', {
+                    address: this.form.address,
+                    role: this.form.role
+                }).then(res => {
+                    this.$message.success('请求成功');
+                }).catch(err => {
+                    this.$message.error('请求失败');
+                })
                 this.registerVisible = false;
+            },
+            checkDisabled(){
+                return !this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111'
             }
         }
     }
