@@ -8,7 +8,7 @@
         <div class="container">
             <div class="handle-box">
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="handleNew">新建属性</el-button>
+                <el-button type="primary" icon="search" @click="handleNew">申请新属性</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column prop="name" label="属性名" sortable>
@@ -29,9 +29,28 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="新建" :visible.sync="createVisible" width="30%">
-            <el-form ref="form" :model="create" label-width="80px">
+            <el-form ref="form" :model="create" label-width="120px">
                 <el-form-item label="属性名">
                     <el-input v-model="create.name"></el-input>
+                </el-form-item>
+                <el-form-item label="自定义合约">
+                    <el-switch v-model="create.useTemplate"></el-switch>
+                    <el-tooltip class="item" effect="dark" placement="bottom">
+                        <div slot="content">满足以下ABI
+                            <br>[{"constant":true,"inputs":[{"name":"_id","type":"string"}],"name":"getFileNum","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},
+                            <br>{"constant":false,"inputs":[{"name":"_FileId","type":"string"},{"name":"_hash","type":"string"}],"name":"writeDB","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+                            <br>{"constant":false,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"setWriter","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+                            <br>{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},
+                            <br>{"constant":true,"inputs":[{"name":"_dataId","type":"string"}],"name":"readDB","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},
+                            <br>{"constant":true,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"checkWriter","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},
+                            <br>{"constant":false,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"addReader","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
+                            <br>{"constant":true,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"checkReader","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
+                        </div>
+                        <i class="el-icon-question"></i>
+                    </el-tooltip>
+                </el-form-item>
+                <el-form-item label="合约地址" v-show="create.useTemplate">
+                    <el-input v-model="create.address"></el-input>
                 </el-form-item>
             </el-form>
 
@@ -85,7 +104,9 @@
                 createVisible: false,
                 assignVisible: false,
                 create: {
-                    name: ''
+                    name: '',
+                    useTemplate: false,
+                    address: null
                 },
                 form: {
                     name: '',
@@ -162,7 +183,8 @@
             applyNew(){
                 this.$axios.post('/service/user/requestProperty', {
                     propertyName: this.create.name,
-                    target: this.name
+                    target: this.name,
+                    address: this.create.address
                 }).then(res => {
                     this.$message.success('请求成功');
                 }).catch(err => {
