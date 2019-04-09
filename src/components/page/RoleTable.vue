@@ -11,7 +11,7 @@
                 <el-button type="primary" icon="search" @click="handleNew()">申请新角色</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="name" label="角色名" width="160">
+                <el-table-column prop="name" label="角色名" sortable>
                 </el-table-column>
                 <el-table-column prop="address" label="地址" :formatter="formatter">
                 </el-table-column>
@@ -28,20 +28,40 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="新建" :visible.sync="createVisible" width="30%">
+        <el-dialog title="申请新角色" :visible.sync="createVisible" width="30%">
             <el-form ref="form" :model="create" label-width="120px">
                 <el-form-item label="角色名">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
                 <el-form-item label="自定义合约">
                     <el-switch v-model="create.useTemplate"></el-switch>
-                    <el-tooltip class="item" effect="dark" placement="bottom">
+                    <el-tooltip class="item" effect="dark" placement="right">
                         <div slot="content">满足以下ABI
-                            <br>[{"constant":false,"inputs":[{"name":"_name","type":"string"},{"name":"_scAddr","type":"address"}],"name":"setManaged","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                            <br>{"constant":true,"inputs":[{"name":"_name","type":"string"}],"name":"getManaged","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},
-                            <br>{"constant":true,"inputs":[{"name":"_name","type":"string"}],"name":"getOwned","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},
-                            <br>{"constant":false,"inputs":[{"name":"_name","type":"string"},{"name":"_scAddr","type":"address"}],"name":"setOwned","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                            <br>{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
+                            <br>[{
+                            <br>&emsp;&emsp;"constant":false,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_name","type":"string"},{"name":"_scAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"setManaged",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"nonpayable","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_name","type":"string"}],
+                            <br>&emsp;&emsp;"name":"getManaged",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_name","type":"string"}],
+                            <br>&emsp;&emsp;"name":"getOwned",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":false,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_name","type":"string"},{"name":"_scAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"setOwned",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"nonpayable","type":"function"
+                            <br>},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
                         </div>
                         <i class="el-icon-question"></i>
                     </el-tooltip>
@@ -58,13 +78,10 @@
         </el-dialog>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="注册" :visible.sync="registerVisible" width="30%">
+        <el-dialog title="添加用户" :visible.sync="registerVisible" width="30%">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="地址">
                     <el-input v-model="form.address"></el-input>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-input v-model="form.role"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -155,6 +172,7 @@
             handleRegister(index, row) {
                 this.idx = index;
                 this.registerVisible = true;
+                this.form.role = row.name;
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
@@ -182,7 +200,7 @@
                 this.registerVisible = false;
             },
             checkDisabled(){
-                return !this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111'
+                return !(this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111');
             }
         }
     }

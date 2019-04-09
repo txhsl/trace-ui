@@ -10,20 +10,15 @@
                         </div>
                     </div>
                     <div class="user-info-list">地址：<span>{{name}}</span></div>
-                    <div class="user-info-list">余额：<span>1000 Ether</span></div>
+                    <div class="user-info-list">余额：<span>{{balance}} Ether</span></div>
                 </el-card>
-                <el-card shadow="hover" style="height:252px;">
+                <el-card shadow="hover" style="height:322px;">
                     <div slot="header" class="clearfix">
                         <span>活跃度占比</span>
                     </div>
-                    RoleA
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>
-                    RoleB
-                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>
-                    RoleC
-                    <el-progress :percentage="3.7"></el-progress>
-                    RoleD
-                    <el-progress :percentage="0.9" color="#f56c6c"></el-progress>
+                    <div v-for="role in this.roles" :key="role">{{role}}
+                        <el-progress :percentage="calculatePercentage(roleTxCounts[roles.indexOf(role)])" :color="colors[roles.indexOf(role)]"></el-progress>
+                    </div>
                 </el-card>
             </el-col>
             <el-col :span="14">
@@ -33,7 +28,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{roleCount}}</div>
+                                    <div class="grid-num">{{roles.length}}</div>
                                     <div>角色数量</div>
                                 </div>
                             </div>
@@ -62,7 +57,7 @@
                         </el-card>
                     </el-col>
                 </el-row>
-                <el-card shadow="hover" style="height:403px;">
+                <el-card shadow="hover" style="height:473px;">
                     <schart ref="line" class="schart" canvasId="line" :data="data" type="line" :options="options"></schart>
                 </el-card>
             </el-col>
@@ -78,45 +73,28 @@
         data() {
             return {
                 name: localStorage.getItem('ms_username'),
-                roleCount: 0,
+                balance: 0,
+                roles: [],
+                roleTxCounts: [],
+                height: 0,
+                heightTxCount: 0,
+                leaders: ["0xdb2bbab1d9eca60c937aa9c995664f86b3da2934", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145",
+                    "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e", "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47",
+                    "0x40b00de2e7b694b494022eef90e874f5e553f996", "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a"],
                 propertyCount: 0,
                 txCount: 0,
                 data: [{
-                        name: '2018/09/04',
-                        value: 1083
-                    },
-                    {
-                        name: '2018/09/05',
-                        value: 941
-                    },
-                    {
-                        name: '2018/09/06',
-                        value: 1139
-                    },
-                    {
-                        name: '2018/09/07',
-                        value: 816
-                    },
-                    {
-                        name: '2018/09/08',
-                        value: 327
-                    },
-                    {
-                        name: '2018/09/09',
-                        value: 228
-                    },
-                    {
-                        name: '2018/09/10',
-                        value: 1065
-                    }
-                ],
+                    name: '',
+                    value: 0,
+                }],
                 options: {
                     title: '最近的链上交易统计',
                     showValue: false,
                     fillColor: 'rgb(45, 140, 240)',
                     bottomPadding: 30,
                     topPadding: 30
-                }
+                },
+                colors: ["#42b983", "#f1e05a", "#f56c6c", "#409eff", "#909399", "#982bbf"]
             }
         },
         components: {
@@ -127,9 +105,7 @@
                 if (this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111') {
                     return '系统管理员';
                 }
-                else if (["0xdb2bbab1d9eca60c937aa9c995664f86b3da2934", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145",
-                "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e", "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47",
-                 "0x40b00de2e7b694b494022eef90e874f5e553f996", "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a"].includes(this.name)) {
+                else if (this.leaders.includes(this.name)) {
                     return '角色管理员';
                 }
                 else {
@@ -139,12 +115,11 @@
         },
         created(){
             this.handleListener();
-            this.changeDate();
         },
         mounted(){
             this.$axios.get("/service/system/getRoleNames")
                 .then(res => {
-                    this.roleCount = res.data.length;
+                    this.roles = res.data;
                 });
             this.$axios.get("/service/system/getPropertyNames")
                 .then(res => {
@@ -153,6 +128,27 @@
             this.$axios.get("/service/transaction/completed")
                 .then(res => {
                     this.txCount = res.data.length;
+                });
+            this.$axios.get("/service/transaction/balance")
+                .then(res => {
+                    this.balance = res.data;
+                });
+            this.$axios.get("/service/transaction/completed/address")
+                .then(res => {
+                    this.roleTxCounts = res.data;
+                });
+            this.$axios.get("/service/transaction/completed/height")
+                .then(res => {
+                    this.height = res.data.height;
+                    this.heightTxCount = res.data.recent;
+                    this.data = [];
+                    var start = this.height - this.heightTxCount.length;
+                    this.heightTxCount.forEach(element => {
+                        this.data.push({
+                            name: ++start,
+                            value: element
+                        })
+                    });
                 });
         },
         activated(){
@@ -163,13 +159,6 @@
             bus.$off('collapse', this.handleBus);
         },
         methods: {
-            changeDate(){
-                const now = new Date().getTime();
-                this.data.forEach((item, index) => {
-                    const date = new Date(now - (6 - index) * 86400000);
-                    item.name = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
-                })
-            },
             handleListener(){
                 bus.$on('collapse', this.handleBus);
                 // 调用renderChart方法对图表进行重新渲染
@@ -183,6 +172,9 @@
             renderChart(){
                 this.$refs.bar.renderChart();
                 this.$refs.line.renderChart();
+            },
+            calculatePercentage(count){
+                return this.txCount == 0 ? 0 : 100*count/this.txCount;
             }
         }
     }

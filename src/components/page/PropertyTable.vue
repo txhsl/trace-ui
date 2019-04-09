@@ -28,23 +28,63 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="新建" :visible.sync="createVisible" width="30%">
+        <el-dialog title="申请新属性" :visible.sync="createVisible" width="30%">
             <el-form ref="form" :model="create" label-width="120px">
                 <el-form-item label="属性名">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
                 <el-form-item label="自定义合约">
                     <el-switch v-model="create.useTemplate"></el-switch>
-                    <el-tooltip class="item" effect="dark" placement="bottom">
+                    <el-tooltip class="item" effect="dark" placement="right">
                         <div slot="content">满足以下ABI
-                            <br>[{"constant":true,"inputs":[{"name":"_id","type":"string"}],"name":"getFileNum","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"pure","type":"function"},
-                            <br>{"constant":false,"inputs":[{"name":"_FileId","type":"string"},{"name":"_hash","type":"string"}],"name":"writeDB","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                            <br>{"constant":false,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"setWriter","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                            <br>{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},
-                            <br>{"constant":true,"inputs":[{"name":"_dataId","type":"string"}],"name":"readDB","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},
-                            <br>{"constant":true,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"checkWriter","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},
-                            <br>{"constant":false,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"addReader","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                            <br>{"constant":true,"inputs":[{"name":"_roleAddr","type":"address"}],"name":"checkReader","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
+                            <br>[{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_id","type":"string"}],
+                            <br>&emsp;&emsp;"name":"getFileNum",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"string"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"pure","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":false,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_FileId","type":"string"},{"name":"_hash","type":"string"}],
+                            <br>&emsp;&emsp;"name":"writeDB",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"string"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"nonpayable","type":"function"},
+                            <br>{"constant":false,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_roleAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"setWriter",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"nonpayable","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[],
+                            <br>&emsp;&emsp;"name":"getOwner",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"address"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_dataId","type":"string"}],
+                            <br>&emsp;&emsp;"name":"readDB",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"string"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_roleAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"checkWriter",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"bool"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":false,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_roleAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"addReader",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"bool"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"nonpayable","type":"function"
+                            <br>},{
+                            <br>&emsp;&emsp;"constant":true,
+                            <br>&emsp;&emsp;"inputs":[{"name":"_roleAddr","type":"address"}],
+                            <br>&emsp;&emsp;"name":"checkReader",
+                            <br>&emsp;&emsp;"outputs":[{"name":"","type":"bool"}],
+                            <br>&emsp;&emsp;"payable":false,"stateMutability":"view","type":"function"
+                            <br>},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
                         </div>
                         <i class="el-icon-question"></i>
                     </el-tooltip>

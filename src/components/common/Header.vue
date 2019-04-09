@@ -51,7 +51,7 @@
                 collapse: false,
                 fullscreen: false,
                 name: 'linxin',
-                message: 2
+                message: localStorage.getItem('ms_message')
             }
         },
         computed:{

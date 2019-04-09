@@ -148,6 +148,7 @@
                             }
                         });
                     });
+                localStorage.setItem('ms_message',this.unread.length);
             },
             getReceipts() {
                 this.$axios.get('/service/message/receipt')
@@ -230,7 +231,7 @@
                 }
             }
         },
-        created() {
+        mounted() {
             this.getMessages();
             this.getReceipts();
         },
