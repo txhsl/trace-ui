@@ -22,7 +22,7 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="calculPage()">
                 </el-pagination>
             </div>
         </div>
@@ -100,7 +100,9 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 tableData: [],
+                sortedData: [],
                 cur_page: 1,
+                row_per_page: 10,
                 multipleSelection: [],
                 select_cate: '',
                 select_status: '',
@@ -125,7 +127,7 @@
         },
         computed: {
             data() {
-                return this.tableData.filter((d) => {
+                this.sortedData = this.tableData.filter((d) => {
                     let is_del = false;
                     for (let i = 0; i < this.del_list.length; i++) {
                         if (d.name === this.del_list[i].name) {
@@ -141,6 +143,8 @@
                         }
                     }
                 })
+
+                return this.sortedData.slice(this.row_per_page*(this.cur_page-1), this.row_per_page*this.cur_page);
             }
         },
         methods: {
@@ -201,6 +205,9 @@
             },
             checkDisabled(){
                 return !(this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111');
+            },
+            calculPage() {
+                return this.sortedData.length;
             }
         }
     }

@@ -110,6 +110,7 @@
                 var owned = [];
                 var managed = [];
                 var all = [];
+                this.cur_page = 1;
                 this.$axios.get("/service/system/getProperties")
                     .then(res => {
                         all = res.data;
