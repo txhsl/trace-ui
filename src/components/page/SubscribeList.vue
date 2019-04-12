@@ -10,7 +10,7 @@
                 <div class="drag-box-item">
                     <div class="item-title">已订阅</div>
                     <draggable v-model="subscribed" @remove="removeHandle" :options="dragOptions">
-                        <transition-group tag="div" id="todo" class="item-ul">
+                        <transition-group tag="div" id="subscribed" class="item-ul">
                             <div v-for="item in subscribed" class="drag-list" :key="item.id">
                                 {{item.content}}
                             </div>
@@ -20,7 +20,7 @@
                 <div class="drag-box-item">
                     <div class="item-title">未订阅</div>
                     <draggable v-model="unsubscribed" @remove="removeHandle" :options="dragOptions">
-                        <transition-group tag="div" id="doing" class="item-ul">
+                        <transition-group tag="div" id="unsubscribed" class="item-ul">
                             <div v-for="item in unsubscribed" class="drag-list" :key="item.id">
                                 {{item.content}}
                             </div>
@@ -77,8 +77,6 @@
         name: 'draglist',
         data() {
             return {
-                all: [],
-                cachedTx: null,
                 result: [],
                 dragOptions:{
                     animation: 120,
@@ -86,18 +84,8 @@
                     group: 'sortlist',
                     ghostClass: 'ghost-style'
                 },
-                subscribed: [
-                    {
-                        id: 1,
-                        content: '开发图表组件'
-                    }
-                ],
-                unsubscribed: [
-                    {
-                        id: 1,
-                        content: '开发登录注册页面'
-                    }
-                ]
+                subscribed: [],
+                unsubscribed: []
             }
         },
         components:{
@@ -105,22 +93,61 @@
         },
         methods: {
             removeHandle(event){
-                console.log(event);
-                this.$message.success(`从 ${event.from.id} 移动到 ${event.to.id} `);
+                if (event.from.id === 'unsubscribed' && event.to.id === 'subscribed') {
+                    this.$axios.post("/service/transaction/subscribe", {
+                        address: this.subscribed[event.newIndex].id
+                    }).then(res => {
+                        this.$message.success('订阅成功');
+                    });
+                }
+                else if (event.from.id === 'subscribed' && event.to.id === 'unsubscribed') {
+                    this.$axios.post("/service/transaction/unsubscribe", {
+                        address: this.subscribed[event.newIndex].id
+                    }).then(res => {
+                        this.$message.success('取消订阅成功');
+                    });
+                }
             }
         },
-        created() {
+        mounted() {
+            this.subscribed = [];
+            this.unsubscribed = [];
+            this.result = [];
             this.$axios.get("/service/system/getRoles")
                 .then(res => {
-                    this.all = this.all.concat(res.data);
-                });
-            this.$axios.get("/service/system/getProperties")
-                .then(res => {
-                    this.all = this.all.concat(res.data);
-                });
-            this.$axios.get("/service/transaction/subscribe")
-                .then(res => {
-                    this.cachedTx = res.data;
+                    var part = [];
+                    for (var name in res.data) {
+                        part.push({content: name, id: res.data[name]});
+                    }
+                    return part;
+                })
+                .then(part => {
+                    this.$axios.get("/service/system/getProperties")
+                        .then(res => {
+                            for (var name in res.data) {
+                                part.push({content: name, id: res.data[name]});
+                            }
+                            return part;
+                        })
+                        .then(all => {
+                            this.$axios.get("/service/transaction/subscribe")
+                                .then(res => {
+                                    all.forEach(element => {
+                                        if (res.data[element.id]) {
+                                            this.subscribed.push(element);
+                                        }
+                                        else {
+                                            this.unsubscribed.push(element);
+                                        }
+                                    });
+
+                                    for (var address in res.data) {
+                                        res.data[address].forEach(tx => {
+                                            this.result.push(tx);
+                                        });
+                                    }
+                                });
+                        });
                 });
         },
     }
