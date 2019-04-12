@@ -109,66 +109,66 @@
                 var data = [];
                 var owned = [];
                 var managed = [];
-                var all = [];
                 this.cur_page = 1;
                 this.$axios.get("/service/system/getProperties")
                     .then(res => {
-                        all = res.data;
+                        return res.data;
                     }).catch(err => {
                         this.$message.error('查询属性索引失败！');
-                    });
-                this.$axios.get('/service/user/getOwned')
-                    .then(res => {
-                        let temp = [];
-                        for(var contract in res.data) {
-                            data.push({
-                                name: contract,
-                                permission: '写入',
-                                address: res.data[contract],
-                                status: '可用'
+                    }).then(all => {
+                        this.$axios.get('/service/user/getOwned')
+                            .then(res => {
+                                let temp = [];
+                                for(var contract in res.data) {
+                                    data.push({
+                                        name: contract,
+                                        permission: '写入',
+                                        address: res.data[contract],
+                                        status: '可用'
+                                    });
+                                    temp.push(contract);
+                                }
+                                for(var property in all) {
+                                    if (!temp.includes(property)) {
+                                        data.push({
+                                            name: property,
+                                            permission: '写入',
+                                            address: all[property],
+                                            status: '不可'
+                                        });
+                                    }
+                                }
+                            }).catch(err => {
+                                this.$message.error('查询拥有属性失败！');
                             });
-                            temp.push(contract);
-                        }
-                        for(var property in all) {
-                            if (!temp.includes(property)) {
-                                data.push({
-                                    name: property,
-                                    permission: '写入',
-                                    address: all[property],
-                                    status: '不可'
-                                });
-                            }
-                        }
-                    }).catch(err => {
-                        this.$message.error('查询拥有属性失败！');
-                    });
-                this.$axios.get('/service/user/getManaged')
-                    .then(res => {
-                        let temp = [];
-                        for(var contract in res.data) {
-                            data.push({
-                                name: contract,
-                                permission: '查询',
-                                address: res.data[contract],
-                                status: '可用'
+                        this.$axios.get('/service/user/getManaged')
+                            .then(res => {
+                                let temp = [];
+                                for(var contract in res.data) {
+                                    data.push({
+                                        name: contract,
+                                        permission: '查询',
+                                        address: res.data[contract],
+                                        status: '可用'
+                                    });
+                                    temp.push(contract);
+                                }
+                                for(var property in all) {
+                                    if (!temp.includes(property)) {
+                                        data.push({
+                                            name: property,
+                                            permission: '查询',
+                                            address: all[property],
+                                            status: '不可'
+                                        });
+                                    }
+                                }
+                            }).catch(err => {
+                                this.$message.error('查询管理属性失败！');
                             });
-                            temp.push(contract);
-                        }
-                        for(var property in all) {
-                            if (!temp.includes(property)) {
-                                data.push({
-                                    name: property,
-                                    permission: '查询',
-                                    address: all[property],
-                                    status: '不可'
-                                });
-                            }
-                        }
-                    }).catch(err => {
-                        this.$message.error('查询管理属性失败！');
-                    });
 
-                this.tableData = data;
+                        this.tableData = data;
+                    });
             },
             formatter(row, column) {
                 return row.address;

@@ -2,7 +2,7 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-calendar"></i> 数据管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 数据管理</el-breadcrumb-item>
                 <el-breadcrumb-item>溯源查询</el-breadcrumb-item>
                 <el-breadcrumb-item>批量查询</el-breadcrumb-item>
             </el-breadcrumb>

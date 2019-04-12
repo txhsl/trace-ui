@@ -69,6 +69,16 @@ export default new Router({
                     component: resolve => require(['../components/page/TransactionTabs.vue'], resolve),
                     meta: { title: '交易一览' }
                 },
+                {
+                    path: '/subscribe',
+                    component: resolve => require(['../components/page/SubscribeList.vue'], resolve),
+                    meta: { title: '订阅列表' }
+                },
+                {
+                    path: '/search',
+                    component: resolve => require(['../components/page/SearchForm.vue'], resolve),
+                    meta: { title: '条件查询' }
+                },
 
                 {
                     // 图片上传组件
@@ -81,19 +91,7 @@ export default new Router({
                     path: '/charts',
                     component: resolve => require(['../components/page/BaseCharts.vue'], resolve),
                     meta: { title: 'schart图表' }
-                },
-                {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: resolve => require(['../components/page/DragList.vue'], resolve),
-                    meta: { title: '拖拽列表' }
-                },
-                {
-                    // 拖拽Dialog组件
-                    path: '/dialog',
-                    component: resolve => require(['../components/page/DragDialog.vue'], resolve),
-                    meta: { title: '拖拽弹框' }
-                },
+                }, 
                 {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),

@@ -59,7 +59,7 @@
                         title: '权限一览'
                     },
                     {
-                        icon: 'el-icon-lx-calendar',
+                        icon: 'el-icon-lx-qrcode',
                         index: '3',
                         title: '数据管理',
                         subs: [
@@ -94,7 +94,7 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-lx-copy',
+                        icon: 'el-icon-lx-message',
                         index: 'message',
                         title: '消息中心'
                     },
@@ -104,14 +104,14 @@
                         title: '交易一览'
                     },
                     {
+                        icon: 'el-icon-lx-attention',
+                        index: 'subscribe',
+                        title: '订阅管理'
+                    },
+                    {
                         icon: 'el-icon-lx-search',
                         index: 'search',
                         title: '条件查询'
-                    },
-                    {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '自定义图标'
                     }
                 ]
             }
