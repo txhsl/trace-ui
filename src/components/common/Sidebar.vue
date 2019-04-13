@@ -101,7 +101,7 @@
                     {
                         icon: 'el-icon-lx-sort',
                         index: 'transaction',
-                        title: '交易一览'
+                        title: '任务一览'
                     },
                     {
                         icon: 'el-icon-lx-attention',

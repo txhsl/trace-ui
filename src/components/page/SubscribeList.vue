@@ -27,45 +27,47 @@
                         </transition-group>
                     </draggable>
                 </div>
-                <el-table :data="result" style="width: 100%">
-                    <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <el-form label-position="left" inline class="demo-table-expand">
-                                <el-form-item label="块Hash">
-                                    <span>{{ props.row.blockHash }}</span>
-                                </el-form-item>
-                                <el-form-item label="块编号">
-                                    <span>{{ props.row.blockNumber }}</span>
-                                </el-form-item>
-                                <el-form-item label="交易Hash">
-                                    <span>{{ props.row.hash }}</span>
-                                </el-form-item>
-                                <el-form-item label="发送者">
-                                    <span>{{ props.row.from }}</span>
-                                </el-form-item>
-                                <el-form-item label="接收者">
-                                    <span>{{ props.row.to }}</span>
-                                </el-form-item>
-                                <el-form-item label="Gas消耗">
-                                    <span>{{ props.row.gas}}</span>
-                                </el-form-item>
-                                <el-form-item label="Nonce">
-                                    <span>{{ props.row.nonce }}</span>
-                                </el-form-item>
-                                <el-form-item label="输入">
-                                    <span>{{ props.row.input }}</span>
-                                </el-form-item>
-                            </el-form>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label='交易Hash'>
-                        <template slot-scope="scope">
-                            <span class="message-title">{{scope.row.hash}}</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="from" label='发送者'></el-table-column>
-                    <el-table-column prop="to" label='接收者'></el-table-column>
-                </el-table>
+                <div class="drag-box-table">
+                    <el-table :data="result" style="width: 100%">
+                        <el-table-column type="expand">
+                            <template slot-scope="props">
+                                <el-form label-position="left" inline class="subscribe-table-expand">
+                                    <el-form-item label="块Hash">
+                                        <span>{{ props.row.blockHash }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="块编号">
+                                        <span>{{ props.row.blockNumber }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="交易Hash">
+                                        <span>{{ props.row.hash }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="发送者">
+                                        <span>{{ props.row.from }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="接收者">
+                                        <span>{{ props.row.to }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="Gas消耗">
+                                        <span>{{ props.row.gas}}</span>
+                                    </el-form-item>
+                                    <el-form-item label="Nonce">
+                                        <span>{{ props.row.nonce }}</span>
+                                    </el-form-item>
+                                    <el-form-item label="输入">
+                                        <span class="script">{{ props.row.input }}</span>
+                                    </el-form-item>
+                                </el-form>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label='交易Hash'>
+                            <template slot-scope="scope">
+                                <span class="message-title">{{scope.row.hash}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="from" label='发送者'></el-table-column>
+                        <el-table-column prop="to" label='接收者'></el-table-column>
+                    </el-table>
+                </div>
             </div>
         </div>
     </section>
@@ -102,7 +104,7 @@
                 }
                 else if (event.from.id === 'subscribed' && event.to.id === 'unsubscribed') {
                     this.$axios.post("/service/transaction/unsubscribe", {
-                        address: this.subscribed[event.newIndex].id
+                        address: this.unsubscribed[event.newIndex].id
                     }).then(res => {
                         this.$message.success('取消订阅成功');
                     });
@@ -161,12 +163,18 @@
     }
     .drag-box-item {
         flex: 1;
-        max-width: 330px;
-        min-width: 300px;
+        max-width: 240px;
+        min-width: 210px;
         background-color: #eff1f5;
         margin-right: 16px;
         border-radius: 6px;
         border: 1px #e1e4e8 solid;
+    }
+    .drag-box-table {
+        flex: 1;
+        min-width: 300px;
+        height: 560px;
+        overflow-y: scroll;
     }
     .item-title{
         padding: 8px 8px 8px 12px;
@@ -208,5 +216,29 @@
         display: block;
         color: transparent;
         border-style: dashed
+    }
+
+    .message-title{
+        cursor: pointer;
+    }
+    .handle-row{
+        margin-top: 30px;
+    }
+    .subscribe-table-expand {
+        font-size: 0;
+    }
+    .subscribe-table-expand span {
+        width: 90px;
+        color: #99a9bf;
+    }
+    .subscribe-table-expand .script {
+        display: block;
+        word-wrap:break-word;
+        width: 500px;
+    }
+    .subscribe-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 100%;
     }
 </style>

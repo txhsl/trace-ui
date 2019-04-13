@@ -2,7 +2,7 @@
     <div class="">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-sort"></i> 交易一览</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-sort"></i> 任务一览</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -11,7 +11,7 @@
                     <el-table :data="completed" style="width: 100%">
                         <el-table-column type="expand">
                             <template slot-scope="props">
-                                <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form label-position="left" inline class="task-table-expand">
                                     <el-form-item label="任务主题">
                                         <span>{{ props.row.title }}</span>
                                     </el-form-item>
@@ -56,7 +56,7 @@
                         <el-table :data="pending" style="width: 100%">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
-                                    <el-form label-position="left" inline class="demo-table-expand">
+                                    <el-form label-position="left" inline class="task-table-expand">
                                         <el-form-item label="任务主题">
                                             <span>{{ props.row.title }}</span>
                                         </el-form-item>
@@ -87,7 +87,7 @@
                         <el-table :data="error" style="width: 100%">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
-                                    <el-form label-position="left" inline class="demo-table-expand">
+                                    <el-form label-position="left" inline class="task-table-expand">
                                         <el-form-item label="任务主题">
                                             <span>{{ props.row.title }}</span>
                                         </el-form-item>
@@ -210,17 +210,18 @@
 .handle-row{
     margin-top: 30px;
 }
-.demo-table-expand {
+.task-table-expand {
     font-size: 0;
 }
-.demo-table-expand label {
+.task-table-expand label {
     width: 90px;
     color: #99a9bf;
 }
-.demo-table-expand .el-form-item {
+.task-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
     width: 100%;
+    
 }
 </style>
 
