@@ -150,21 +150,7 @@
                 this.$axios.get('/service/transaction/pending')
                     .then(res => {
                         res.data.forEach(task => {
-                            this.completed.push({
-                                title: task.taskName,
-                                content: task.taskContent,
-                                sender: task.taskSender,
-                                status: task.future
-                            })
-                        });
-                    })
-                    .catch(err => {
-                        this.$message.error('获取失败：未完成交易');
-                    });
-                this.$axios.get('/service/transaction/pending')
-                    .then(res => {
-                        res.data.forEach(task => {
-                            this.completed.push({
+                            this.pending.push({
                                 title: task.taskName,
                                 content: task.taskContent,
                                 sender: task.taskSender,
@@ -178,7 +164,7 @@
                 this.$axios.get('/service/transaction/error')
                     .then(res => {
                         res.data.forEach(task => {
-                            this.completed.push({
+                            this.error.push({
                                 title: task.taskName,
                                 content: task.taskContent,
                                 sender: task.taskSender,
