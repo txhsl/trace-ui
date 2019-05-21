@@ -2,18 +2,12 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 条件查询</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 用户审计</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="查询对象">
-                        <el-select v-model="form.type" placeholder="请选择">
-                            <el-option key="1" label="用户" value="用户"></el-option>
-                            <el-option key="2" label="合约" value="合约"></el-option>
-                        </el-select>
-                    </el-form-item>
                     <el-form-item label="账户地址">
                         <el-input v-model="form.address"></el-input>
                     </el-form-item>
@@ -74,8 +68,7 @@
         data: function(){
             return {
                 form: {
-                    type: '',
-                    address: '',
+                    address: ''
                 },
                 properties:[],
                 result: []
@@ -83,7 +76,7 @@
         },
         methods: {
             onSubmit() {
-                var url = this.form.type === "用户" ? "/service/transaction/userHistory/" : "/service/transaction/contractHistory/";
+                var url = "/service/transaction/userHistory/";
                 this.$axios.get(url + this.form.address).then(res => {
                     this.$message.success('查询成功！');
                     this.result = res.data;

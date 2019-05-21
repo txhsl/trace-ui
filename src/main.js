@@ -21,10 +21,8 @@ router.beforeEach((to, from, next) => {
     if (!role && to.path !== '/login') {
         next('/login');
     } else if (to.meta.adminPermission) {
-        // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
         role === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111' ? next() : next('/403');
     } else if (to.meta.leaderPPermission) {
-        // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
         ["0xdb2bbab1d9eca60c937aa9c995664f86b3da2934", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145",
                 "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e", "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47",
                  "0x40b00de2e7b694b494022eef90e874f5e553f996", "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a"].includes(role) ? next() : next('/403');

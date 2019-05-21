@@ -42,29 +42,32 @@
                         icon: 'el-icon-lx-home',
                         index: 'dashboard',
                         title: '系统首页'
-                    },
-                    {
+                    },{
                         icon: 'el-icon-lx-people',
-                        index: 'role',
-                        title: '角色管理'
-                    },
-                    {
-                        icon: 'el-icon-lx-apps',
-                        index: 'property',
-                        title: '属性管理'
-                    },
-                    {
-                        icon: 'el-icon-lx-cascades',
-                        index: 'permission',
-                        title: '权限一览'
+                        index: '1',
+                        title: '权限管理',
+                        subs: [
+                            {
+                                index: 'role',
+                                title: '角色管理'
+                            },
+                            {
+                                index: 'property',
+                                title: '属性管理'
+                            },
+                            {
+                                index: 'permission',
+                                title: '权限一览'
+                            }
+                        ]
                     },
                     {
                         icon: 'el-icon-lx-qrcode',
-                        index: '3',
-                        title: '数据管理',
+                        index: '2',
+                        title: '存证溯源',
                         subs: [
                             {
-                                index: '3-1',
+                                index: '2-1',
                                 title: '存证提交',
                                 subs: [
                                     {
@@ -78,7 +81,7 @@
                                 ]
                             },
                             {
-                                index: '3-2',
+                                index: '2-2',
                                 title: '溯源查询',
                                 subs: [
                                     {
@@ -94,24 +97,61 @@
                         ]
                     },
                     {
-                        icon: 'el-icon-lx-message',
-                        index: 'message',
-                        title: '消息中心'
-                    },
-                    {
-                        icon: 'el-icon-lx-sort',
-                        index: 'transaction',
-                        title: '任务一览'
-                    },
-                    {
                         icon: 'el-icon-lx-attention',
-                        index: 'subscribe',
-                        title: '订阅管理'
+                        index: '3',
+                        title: '实时监测',
+                        subs: [
+                            {
+                                icon: 'el-icon-lx-sort',
+                                index: 'transaction',
+                                title: '任务一览'
+                            },
+                            {
+                                icon: 'el-icon-lx-attention',
+                                index: 'subscribe',
+                                title: '订阅管理'
+                            }
+                        ]
                     },
                     {
                         icon: 'el-icon-lx-search',
-                        index: 'search',
-                        title: '条件查询'
+                        index: '4',
+                        title: '审计仲裁',
+                        subs: [
+                            {
+                                index: '4-1',
+                                title: '历史审计',
+                                subs: [
+                                    {
+                                        index: 'auditProperty',
+                                        title: '数据审计'
+                                    },
+                                    {
+                                        index: 'auditUser',
+                                        title: '用户审计'
+                                    }
+                                ]
+                            },
+                            {
+                                index: '4-2',
+                                title: '仲裁检举',
+                                subs: [
+                                    {
+                                        index: 'read',
+                                        title: '检举申请'
+                                    },
+                                    {
+                                        index: 'readMultiple',
+                                        title: '仲裁处理'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-message',
+                        index: 'message',
+                        title: '消息中心'
                     }
                 ]
             }

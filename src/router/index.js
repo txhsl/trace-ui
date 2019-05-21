@@ -75,9 +75,14 @@ export default new Router({
                     meta: { title: '订阅列表' }
                 },
                 {
-                    path: '/search',
-                    component: resolve => require(['../components/page/SearchForm.vue'], resolve),
-                    meta: { title: '条件查询' }
+                    path: '/auditUser',
+                    component: resolve => require(['../components/page/AuditUserForm.vue'], resolve),
+                    meta: { title: '用户审计' }
+                },
+                {
+                    path: '/auditProperty',
+                    component: resolve => require(['../components/page/AuditPropertyForm.vue'], resolve),
+                    meta: { title: '数据审计' }
                 },
 
                 {
