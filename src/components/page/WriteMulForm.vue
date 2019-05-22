@@ -2,7 +2,7 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 数据管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
                 <el-breadcrumb-item>存证提交</el-breadcrumb-item>
                 <el-breadcrumb-item>批量提交</el-breadcrumb-item>
             </el-breadcrumb>

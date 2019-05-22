@@ -2,7 +2,9 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 数据审计</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 审计仲裁</el-breadcrumb-item>
+                <el-breadcrumb-item>历史审计</el-breadcrumb-item>
+                <el-breadcrumb-item>数据审计</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">

@@ -2,7 +2,8 @@
     <div class="">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-sort"></i> 任务一览</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> 实时监测</el-breadcrumb-item>
+                <el-breadcrumb-item>任务一览</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">

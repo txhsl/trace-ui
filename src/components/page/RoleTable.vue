@@ -2,7 +2,8 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 角色管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-group"></i> 权限管理</el-breadcrumb-item>
+                <el-breadcrumb-item>角色管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">

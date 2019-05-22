@@ -14,9 +14,9 @@
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">申请</el-button>
                 </div>
-                <p class="login-tips">Tips : 使用以太坊地址和密码登录。<router-link to="register" style="float:right;color: #fff;">申请正式注册</router-link></p>
+                <p class="login-tips">Tips : 使用以太坊钱包地址和钱包密码注册，申请将质押500 Ether作为抵押。</p>
             </el-form>
         </div>
     </div>
@@ -32,10 +32,10 @@
                 },
                 rules: {
                     username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                        { required: true, message: '请输入以太坊地址', trigger: 'blur' }
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
+                        { required: true, message: '请输入钱包密码', trigger: 'blur' }
                     ]
                 }
             }
@@ -44,7 +44,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/service/user/signIn', {
+                        this.$axios.post('/service/user/register', {
                             address: this.ruleForm.username,
                             password: this.ruleForm.password
                         }).then(res => {

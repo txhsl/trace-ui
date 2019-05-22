@@ -84,6 +84,16 @@ export default new Router({
                     component: resolve => require(['../components/page/AuditPropertyForm.vue'], resolve),
                     meta: { title: '数据审计' }
                 },
+                {
+                    path: '/report',
+                    component: resolve => require(['../components/page/ReportForm.vue'], resolve),
+                    meta: { title: '检举申请' }
+                },
+                {
+                    path: '/arbitrate',
+                    component: resolve => require(['../components/page/ArbitrateForm.vue'], resolve),
+                    meta: { title: '仲裁处理' }
+                },
 
                 {
                     // 图片上传组件
@@ -112,6 +122,10 @@ export default new Router({
         {
             path: '/login',
             component: resolve => require(['../components/page/Login.vue'], resolve)
+        },
+        {
+            path: '/register',
+            component: resolve => require(['../components/page/Register.vue'], resolve)
         },
         {
             path: '*',

@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="user-info-list">地址：<span>{{name}}</span></div>
-                    <div class="user-info-list">余额：<span>{{balance}} Ether</span></div>
+                    <div class="user-info-list">余额：<span>{{balance.toFixed(2)}} Ether</span></div>
                 </el-card>
                 <el-card shadow="hover" style="height:322px;">
                     <div slot="header" class="clearfix">

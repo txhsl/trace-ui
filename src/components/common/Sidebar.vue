@@ -43,10 +43,14 @@
                         index: 'dashboard',
                         title: '系统首页'
                     },{
-                        icon: 'el-icon-lx-people',
+                        icon: 'el-icon-lx-group',
                         index: '1',
                         title: '权限管理',
                         subs: [
+                            {
+                                index: 'permission',
+                                title: '权限一览'
+                            },
                             {
                                 index: 'role',
                                 title: '角色管理'
@@ -54,10 +58,6 @@
                             {
                                 index: 'property',
                                 title: '属性管理'
-                            },
-                            {
-                                index: 'permission',
-                                title: '权限一览'
                             }
                         ]
                     },
@@ -137,11 +137,11 @@
                                 title: '仲裁检举',
                                 subs: [
                                     {
-                                        index: 'read',
+                                        index: 'report',
                                         title: '检举申请'
                                     },
                                     {
-                                        index: 'readMultiple',
+                                        index: 'arbitrate',
                                         title: '仲裁处理'
                                     }
                                 ]
