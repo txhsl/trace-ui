@@ -13,10 +13,13 @@
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
+                <el-form-item>
+                    <el-checkbox v-model="ruleForm.checked"><span style="color: #fff;">同意抵押500Ether</span></el-checkbox>
+                </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">申请</el-button>
                 </div>
-                <p class="login-tips">Tips : 使用以太坊钱包地址和钱包密码注册，申请将质押500 Ether作为抵押。</p>
+                <p class="login-tips">Tips : 使用以太坊钱包地址和钱包密码注册。<router-link to="login" style="float:right;color: #fff;">已经不是游客</router-link></p>
             </el-form>
         </div>
     </div>
@@ -28,7 +31,8 @@
             return {
                 ruleForm: {
                     username: '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111',
-                    password: 'Innov@teD@ily1'
+                    password: 'Innov@teD@ily1',
+                    checked: false
                 },
                 rules: {
                     username: [
@@ -36,6 +40,9 @@
                     ],
                     password: [
                         { required: true, message: '请输入钱包密码', trigger: 'blur' }
+                    ],
+                    checked: [
+                        { required: true, message: '请同意抵押操作', trigger: 'blur' }
                     ]
                 }
             }
@@ -54,7 +61,7 @@
                                 localStorage.setItem('ms_username',this.ruleForm.username);
                             }
                         }).catch(error => {
-                            this.$message.error('登录失败');
+                            this.$message.error('申请失败');
                         })
                     } else {
                         console.log('error submit!!');

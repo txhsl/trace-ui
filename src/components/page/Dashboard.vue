@@ -2,19 +2,20 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="10">
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                <el-card shadow="hover" class="mgb20" style="height:300px;">
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator" alt="">
                         <div class="user-info-cont">
                             <div class="user-info-name">{{role}}</div>
                         </div>
                     </div>
-                    <div class="user-info-list">地址：<span>{{name}}</span></div>
-                    <div class="user-info-list">余额：<span>{{balance.toFixed(2)}} Ether</span></div>
+                    <div class="user-info-list">账户地址：<span>{{name}}</span></div>
+                    <div class="user-info-list">账户余额：<span>{{balance.toFixed(2)}} Ether</span></div>
+                    <div class="user-info-list">信用等级：<span>{{500}}</span></div>
                 </el-card>
-                <el-card shadow="hover" style="height:322px;">
+                <el-card shadow="hover" style="height:480px;">
                     <div slot="header" class="clearfix">
-                        <span>活跃度占比</span>
+                        <span>各环节活跃度占比</span>
                     </div>
                     <div v-for="role in this.roles" :key="role">{{role}}
                         <el-progress :percentage="calculatePercentage(roleTxCounts[roles.indexOf(role)])" :color="colors[roles.indexOf(role)]"></el-progress>
@@ -78,9 +79,9 @@
                 roleTxCounts: [],
                 height: 0,
                 heightTxCount: 0,
-                leaders: ["0xdb2bbab1d9eca60c937aa9c995664f86b3da2934", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145",
-                    "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e", "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47",
-                    "0x40b00de2e7b694b494022eef90e874f5e553f996", "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a"],
+                leaders: ["0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111", "0x38a5d4e63bbac1af0eba0d99ef927359ab8d7293", "0x40b00de2e7b694b494022eef90e874f5e553f996",
+                            "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a", "0x86dec6586bfa1dfe303eafbefee843919b543fd3", "0x135b8fb39d0f06ea1f2466f7e9f39d3136431480", "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e",
+                            "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47", "0x5386787c9ef76a235d27f000170abeede038a3db", "0xb41717679a04696a2aaac280d9d45ddd3760ff47", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145"],
                 propertyCount: 0,
                 txCount: 0,
                 data: [{
@@ -88,7 +89,7 @@
                     value: 0,
                 }],
                 options: {
-                    title: '最近的链上交易统计',
+                    title: '近期上链快照数量统计',
                     showValue: false,
                     fillColor: 'rgb(45, 140, 240)',
                     bottomPadding: 30,
@@ -106,7 +107,7 @@
                     return '系统管理员';
                 }
                 else if (this.leaders.includes(this.name)) {
-                    return '角色管理员';
+                    return this.roles[this.leaders.indexOf(this.name)-1] + '管理员';
                 }
                 else {
                     return '普通用户';

@@ -3,25 +3,24 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-search"></i> 审计仲裁</el-breadcrumb-item>
-                <el-breadcrumb-item>存证提交</el-breadcrumb-item>
-                <el-breadcrumb-item>单个提交</el-breadcrumb-item>
+                <el-breadcrumb-item>仲裁检举</el-breadcrumb-item>
+                <el-breadcrumb-item>检举申请</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="属性名">
-                        <el-select v-model="form.name" placeholder="请选择">
-                            <el-option v-for="item in properties" :value="item" :key="item" name="form.name">
-                                {{item}}
-                            </el-option>
-                        </el-select>
+                    <el-form-item label="交易ID">
+                        <el-input v-model="form.txid"></el-input>
                     </el-form-item>
-                    <el-form-item label="数据ID">
-                        <el-input v-model="form.id"></el-input>
+                    <el-form-item label="检举对象">
+                        <el-input v-model="form.target"></el-input>
                     </el-form-item>
-                    <el-form-item label="存证内容">
-                        <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
+                    <el-form-item label="检举金额">
+                        <el-input-number v-model="form.amount" :min="1" :max="100"></el-input-number>
+                    </el-form-item>
+                    <el-form-item label="检举原因">
+                        <el-input type="textarea" rows="5" v-model="form.reason"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -40,27 +39,22 @@
         data: function(){
             return {
                 form: {
-                    name: '',
-                    id: '',
-                    desc: '',
-                },
-                properties:[]
+                    txid: '',
+                    target: '',
+                    amount: 1,
+                    reason: ''
+                }
             }
-        },
-        mounted(){
-            this.$axios.get("/service/system/getPropertyNames")
-                .then(res => {
-                    this.properties = res.data;
-                });
         },
         methods: {
             onSubmit() {
-                this.$axios.post("/service/data/write", {
-                    id: this.form.id,
-                    propertyName: this.form.name,
-                    data: this.form.desc
+                this.$axios.post("/service/transaction/report", {
+                    txid: this.form.txid,
+                    target: this.form.target,
+                    amount: this.form.amount,
+                    reason: this.form.reason
                 }).then(res => {
-                    this.$message.success('提交成功！文件编号' + res.data);
+                    this.$message.success('提交成功！');
                 }).catch(err => {
                     this.$message.error('提交失败！');
                 })
