@@ -17,7 +17,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="数据ID">
+                    <el-form-item label="货品ID">
                         <el-input v-model="form.id"></el-input>
                     </el-form-item>
                     <el-form-item label="存证内容">

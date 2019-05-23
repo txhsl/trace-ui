@@ -4,20 +4,13 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
                 <el-breadcrumb-item>溯源查询</el-breadcrumb-item>
-                <el-breadcrumb-item>单个查询</el-breadcrumb-item>
+                <el-breadcrumb-item>完整查询</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="属性名">
-                        <el-select v-model="form.name" placeholder="请选择">
-                            <el-option v-for="item in properties" :value="item" :key="item" name="form.name">
-                                {{item}}
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="数据ID">
+                    <el-form-item label="货品ID">
                         <el-input v-model="form.id"></el-input>
                     </el-form-item>
                     <el-form-item>
@@ -27,11 +20,12 @@
                 </el-form>
             </div>
         </div>
+
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" label-width="80px">
                     <el-form-item label="查询结果">
-                        <el-table :data="result" border class="table" ref="multipleTable">
+                        <el-table :data="results" border class="table" ref="multipleTable">
                             <el-table-column prop="id" label="ID" sortable>
                             </el-table-column>
                             <el-table-column prop="name" label="属性名">
@@ -55,11 +49,10 @@
         data: function(){
             return {
                 form: {
-                    name: '',
-                    id: '',
+                    id: ''
                 },
                 properties:[],
-                result: []
+                results: []
             }
         },
         mounted(){
@@ -70,17 +63,23 @@
         },
         methods: {
             onSubmit() {
-                this.$axios.post("/service/data/read", {
-                    id: this.form.id,
-                    propertyName: this.form.name
+                this.$axios.post("/service/data/readMultiple", {
+                    ids: [this.form.id],
+                    propertyNames: this.properties
                 }).then(res => {
-                    this.$message.success('查询成功！');
-                    this.result = [{
-                        id: res.data.id,
-                        name: res.data.propertyName,
-                        data: res.data.data,
-                        status: res.data.status
-                    }];
+                    var temp = [];
+                    for(var property in res.data.data) {
+                        var single = res.data.data[property];
+                        for (var id in single) {
+                            temp.push({
+                                id: id,
+                                name: property,
+                                data: single[id].data,
+                                status: single[id].status
+                            });
+                        }
+                    }
+                    this.results = temp;
                 }).catch(err => {
                     this.$message.error('查询失败！');
                 })

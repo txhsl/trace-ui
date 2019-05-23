@@ -86,11 +86,11 @@
                                 subs: [
                                     {
                                         index: 'read',
-                                        title: '单个查询'
+                                        title: '完整查询'
                                     },
                                     {
                                         index: 'readMultiple',
-                                        title: '批量查询'
+                                        title: '关键查询'
                                     }
                                 ]
                             }

@@ -4,7 +4,7 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
                 <el-breadcrumb-item>溯源查询</el-breadcrumb-item>
-                <el-breadcrumb-item>批量查询</el-breadcrumb-item>
+                <el-breadcrumb-item>关键查询</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -116,7 +116,7 @@
                 return "属性名"+index;
             },
             getIdLabel(index) {
-                return "数据ID"+index;
+                return "货品ID"+index;
             }
         }
     }

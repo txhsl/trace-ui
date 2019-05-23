@@ -20,7 +20,7 @@
                         </el-form-item>
                         <el-form-item v-for="(single,dindex) in item.data" :key="dindex">
                             <el-card>
-                                <el-form-item label="数据ID">
+                                <el-form-item label="货品ID">
                                     <el-input v-model="single.id"></el-input>
                                 </el-form-item>
                                 <el-form-item label="存证内容">
@@ -94,7 +94,7 @@
                 this.$axios.post("/service/data/writeMultiple", {
                     data: req,
                 }).then(res => {
-                    this.$message.success('提交成功！文件编号' + res.data);
+                    this.$message.success('提交成功！快照编号' + res.data);
                 }).catch(err => {
                     this.$message.error('提交失败！');
                 })
