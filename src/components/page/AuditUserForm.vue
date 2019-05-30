@@ -21,6 +21,7 @@
             </div>
         </div>
         <div class="container">
+            <label class="el-form-item__label">信用等级：{{level}}</label>
             <el-table :data="result" style="width: 100%">
                 <el-table-column type="expand">
                     <template slot-scope="props">
@@ -73,18 +74,23 @@
                     address: ''
                 },
                 properties:[],
-                result: []
+                result: [],
+                level: ''
             }
         },
         methods: {
             onSubmit() {
-                var url = "/service/transaction/userHistory/";
-                this.$axios.get(url + this.form.address).then(res => {
-                    this.$message.success('查询成功！');
-                    this.result = res.data;
-                }).catch(err => {
-                    this.$message.error('查询失败！');
-                })
+                var url1 = "/service/arbitration/level/";
+                var url2 = "/service/transaction/userHistory/";
+                this.$axios.get(url1 + this.form.address).then(res => {
+                    this.level = res.data;
+                    this.$axios.get(url2 + this.form.address).then(res => {
+                        this.$message.success('查询成功！');
+                        this.result = res.data;
+                    }).catch(err => {
+                        this.$message.error('查询失败！');
+                    });
+                });
             }
         }
     }

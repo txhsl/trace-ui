@@ -17,8 +17,8 @@
                     <div slot="header" class="clearfix">
                         <span>各环节活跃度占比</span>
                     </div>
-                    <div v-for="role in this.roles" :key="role">{{role}}
-                        <el-progress :percentage="calculatePercentage(roleTxCounts[roles.indexOf(role)])" :color="colors[roles.indexOf(role)]"></el-progress>
+                    <div v-for="name in this.roleNames" :key="name">{{name}}
+                        <el-progress :percentage="calculatePercentage(roleTxCounts[roleNames.indexOf(name)])" :color="colors[roleNames.indexOf(name)]"></el-progress>
                     </div>
                 </el-card>
             </el-col>
@@ -29,7 +29,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{roles.length}}</div>
+                                    <div class="grid-num">{{roleNames.length}}</div>
                                     <div>角色数量</div>
                                 </div>
                             </div>
@@ -76,7 +76,9 @@
                 name: localStorage.getItem('ms_username'),
                 balance: 0,
                 level:0,
-                roles: [],
+                rcAddr: '',
+                roles: {},
+                roleNames: [],
                 roleTxCounts: [],
                 height: 0,
                 heightTxCount: 0,
@@ -108,10 +110,15 @@
                     return '系统管理员';
                 }
                 else if (this.leaders.includes(this.name)) {
-                    return this.roles[this.leaders.indexOf(this.name)] + '管理员';
+                    return this.roleNames[this.leaders.indexOf(this.name)] + '管理员';
                 }
                 else {
-                    return '普通用户';
+                    for(var name in this.roles) {
+                        if (this.roles[name] === this.rcAddr) {
+                            return name + "用户";
+                        }
+                    }
+                    return "游客";
                 }
             }
         },
@@ -121,10 +128,14 @@
         mounted(){
             this.$axios.get("/service/system/getRoleNames")
                 .then(res => {
-                    this.roles = ["系统管理员"];
-                    res.data.forEach(role => {
-                        this.roles.push(role);
+                    this.roleNames = ["系统管理员"];
+                    res.data.forEach(name => {
+                        this.roleNames.push(name);
                     })
+                });
+            this.$axios.get("/service/system/getRoles")
+                .then(res => {
+                    this.roles = res.data;
                 });
             this.$axios.get("/service/system/getPropertyNames")
                 .then(res => {
@@ -134,11 +145,15 @@
                 .then(res => {
                     this.txCount = res.data.length;
                 });
+            this.$axios.get("/service/system/getRole/" + this.name)
+                .then(res => {
+                    this.rcAddr = res.data;
+                });
             this.$axios.get("/service/transaction/balance")
                 .then(res => {
                     this.balance = res.data;
                 });
-            this.$axios.get("/service/arbitration/level")
+            this.$axios.get("/service/arbitration/level/" + this.name)
                 .then(res => {
                     this.level = res.data;
                 });
