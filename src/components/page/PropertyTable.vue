@@ -18,7 +18,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleAssign(scope.$index, scope.row)">授权</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleAssign(scope.$index, scope.row)" :disabled="checkDisabled()">授权</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -254,6 +254,12 @@
             },
             calculPage() {
                 return this.sortedData.length;
+            },
+            checkDisabled() {
+                return !(["0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111", "0x38a5d4e63bbac1af0eba0d99ef927359ab8d7293", "0x40b00de2e7b694b494022eef90e874f5e553f996",
+                            "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a", "0x86dec6586bfa1dfe303eafbefee843919b543fd3", "0x135b8fb39d0f06ea1f2466f7e9f39d3136431480", "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e",
+                            "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47", "0x5386787c9ef76a235d27f000170abeede038a3db", "0xb41717679a04696a2aaac280d9d45ddd3760ff47", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145"]
+                            .includes(this.name));
             }
         }
     }

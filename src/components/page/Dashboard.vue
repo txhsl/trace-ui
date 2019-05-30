@@ -11,9 +11,9 @@
                     </div>
                     <div class="user-info-list">账户地址：<span>{{name}}</span></div>
                     <div class="user-info-list">账户余额：<span>{{balance.toFixed(2)}} Ether</span></div>
-                    <div class="user-info-list">信用等级：<span>{{500}}</span></div>
+                    <div class="user-info-list">信用等级：<span>{{level}}</span></div>
                 </el-card>
-                <el-card shadow="hover" style="height:480px;">
+                <el-card shadow="hover" style="height:520px;">
                     <div slot="header" class="clearfix">
                         <span>各环节活跃度占比</span>
                     </div>
@@ -75,6 +75,7 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 balance: 0,
+                level:0,
                 roles: [],
                 roleTxCounts: [],
                 height: 0,
@@ -89,7 +90,7 @@
                     value: 0,
                 }],
                 options: {
-                    title: '近期上链快照数量统计',
+                    title: '近期上链事件数量统计',
                     showValue: false,
                     fillColor: 'rgb(45, 140, 240)',
                     bottomPadding: 30,
@@ -107,7 +108,7 @@
                     return '系统管理员';
                 }
                 else if (this.leaders.includes(this.name)) {
-                    return this.roles[this.leaders.indexOf(this.name)-1] + '管理员';
+                    return this.roles[this.leaders.indexOf(this.name)] + '管理员';
                 }
                 else {
                     return '普通用户';
@@ -120,7 +121,10 @@
         mounted(){
             this.$axios.get("/service/system/getRoleNames")
                 .then(res => {
-                    this.roles = res.data;
+                    this.roles = ["系统管理员"];
+                    res.data.forEach(role => {
+                        this.roles.push(role);
+                    })
                 });
             this.$axios.get("/service/system/getPropertyNames")
                 .then(res => {
@@ -133,6 +137,10 @@
             this.$axios.get("/service/transaction/balance")
                 .then(res => {
                     this.balance = res.data;
+                });
+            this.$axios.get("/service/arbitration/level")
+                .then(res => {
+                    this.level = res.data;
                 });
             this.$axios.get("/service/transaction/completed/address")
                 .then(res => {

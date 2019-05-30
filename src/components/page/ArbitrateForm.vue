@@ -35,40 +35,43 @@
         name: 'baseform',
         data: function(){
             return {
-                tableData: [{
-                    target: '0x38a5d4e63bbac1af0eba0d99ef927359ab8d7293',
-                    txid: '0x27c1439b9857bafe8aa3b75a71c964889fc0b91242e54333a3dd36729c296b1f',
-                    from: '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111',
-                    amount: 50,
-                    reason: '异常的权限授予'
-                }]
+                tableData: []
             }
         },
         mounted(){
-            this.$axios.get("/service/system/getPropertyNames")
+            this.$axios.get("/service/arbitration/receive")
                 .then(res => {
-                    this.properties = res.data;
+                    var results = [];
+                    let count = 0;
+                    res.data.forEach(report => {
+                        results.push({
+                            target: report.target,
+                            txid: report.txid,
+                            from: report.from,
+                            amount: report.amount,
+                            reason: report.reason,
+                            index: count++
+                        });
+                    })
+                    this.tableData = results;
                 });
         },
         methods: {
-            onAgree() {
-                this.$axios.post("/service/data/read", {
-                    id: this.form.id,
-                    propertyName: this.form.name
-                }).then(res => {
-                    this.$message.success('查询成功！');
-                    this.result = [{
-                        id: res.data.id,
-                        name: res.data.propertyName,
-                        data: res.data.data,
-                        status: res.data.status
-                    }];
-                }).catch(err => {
-                    this.$message.error('查询失败！');
-                })
+            handleAgree(index, row) {
+                this.$axios.put("/service/arbitration/agree/"+row.index)
+                    .then(res => {
+                        this.$message.success('处理成功！');
+                    }).catch(err => {
+                        this.$message.error('处理失败！');
+                    })
             },
-            onRefuse() {
-
+            handleRefuse(index, row) {
+                this.$axios.put("/service/arbitration/disagree/"+row.index)
+                    .then(res => {
+                        this.$message.success('处理成功！');
+                    }).catch(err => {
+                        this.$message.error('处理失败！');
+                    })
             }
         }
     }

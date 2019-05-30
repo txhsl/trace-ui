@@ -14,7 +14,12 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-checkbox v-model="ruleForm.checked"><span style="color: #fff;">同意抵押500Ether</span></el-checkbox>
+                    <el-select v-model="ruleForm.role" placeholder="请选择生产环节">
+                        <el-option v-for="item in roles" :value="item" :key="item" name="ruleForm.role">
+                            {{item}}
+                        </el-option>
+                    </el-select>
+                    <el-checkbox v-model="ruleForm.checked" style="margin-left: 50px;"><span style="color: #fff;">同意抵押500Wei</span></el-checkbox>
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">申请</el-button>
@@ -31,6 +36,7 @@
             return {
                 ruleForm: {
                     username: '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111',
+                    role: '',
                     password: 'Innov@teD@ily1',
                     checked: false
                 },
@@ -38,22 +44,35 @@
                     username: [
                         { required: true, message: '请输入以太坊地址', trigger: 'blur' }
                     ],
+                    role: [
+                        { required: true, message: '请选择申请的角色组', trigger: 'blur' }
+                    ],
                     password: [
                         { required: true, message: '请输入钱包密码', trigger: 'blur' }
                     ],
                     checked: [
                         { required: true, message: '请同意抵押操作', trigger: 'blur' }
                     ]
-                }
+                },
+                roles: []
             }
+        },
+        created() {
+            this.$axios.get('/service/system/getRoleNames')
+                .then((res) => {
+                   for(var role in res.data) {
+                            this.roles.push(res.data[role]);
+                        }
+                })
         },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/service/user/register', {
+                        this.$axios.post('/service/system/signUp', {
                             address: this.ruleForm.username,
-                            password: this.ruleForm.password
+                            password: this.ruleForm.password,
+                            role: this.ruleForm.role
                         }).then(res => {
                             localStorage.setItem('ms_username',this.ruleForm.username);
                             if (res.data.result) {

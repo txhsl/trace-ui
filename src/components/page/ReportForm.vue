@@ -48,13 +48,19 @@
         },
         methods: {
             onSubmit() {
-                this.$axios.post("/service/transaction/report", {
+                this.$axios.post("/service/arbitration/report", {
+                    from: localStorage.getItem('ms_username'),
                     txid: this.form.txid,
                     target: this.form.target,
                     amount: this.form.amount,
                     reason: this.form.reason
                 }).then(res => {
-                    this.$message.success('提交成功！');
+                    if (res.data.result) {
+                        this.$message.success('提交成功！');
+                    }
+                    else {
+                        this.$message.error('系统内未找到对应用户或者管理员！');
+                    }
                 }).catch(err => {
                     this.$message.error('提交失败！');
                 })
