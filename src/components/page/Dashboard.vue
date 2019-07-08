@@ -198,7 +198,7 @@
                 this.$refs.line.renderChart();
             },
             calculatePercentage(count){
-                return this.txCount == 0 ? 0 : 100*count/this.txCount;
+                return this.txCount == 0 ? 0 : (100*count/this.txCount).toFixed(1);
             }
         }
     }

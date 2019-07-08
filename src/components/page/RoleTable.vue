@@ -185,6 +185,7 @@
             applyNew(){
                 this.$axios.post('/service/system/requestRole', {
                     name: this.create.name,
+                    admin: this.name,
                     address: this.create.address
                 }).then(res => {
                     this.$message.success('请求成功');

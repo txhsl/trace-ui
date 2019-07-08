@@ -222,9 +222,9 @@
                 this.multipleSelection = val;
             },
             applyNew(){
-                this.$axios.post('/service/user/requestProperty', {
-                    propertyName: this.create.name,
-                    target: this.name,
+                this.$axios.post('/service/system/requestProperty', {
+                    name: this.create.name,
+                    admin: this.name,
                     address: this.create.address
                 }).then(res => {
                     this.$message.success('请求成功');

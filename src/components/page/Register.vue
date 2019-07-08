@@ -35,9 +35,9 @@
         data: function(){
             return {
                 ruleForm: {
-                    username: '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111',
+                    username: '',
                     role: '',
-                    password: 'Innov@teD@ily1',
+                    password: '',
                     checked: false
                 },
                 rules: {
