@@ -34,8 +34,8 @@
                 <el-form-item label="角色名">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
-                <el-form-item label="自定义合约">
-                    <el-switch v-model="create.useTemplate"></el-switch>
+                <el-form-item label="自定义合约" v-if="false">
+                    <el-switch v-model="create.useTemplate" disabled="false"></el-switch>
                     <el-tooltip class="item" effect="dark" placement="right">
                         <div slot="content">满足以下ABI
                             <br>[{

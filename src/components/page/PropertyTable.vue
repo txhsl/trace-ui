@@ -34,8 +34,8 @@
                 <el-form-item label="属性名">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
-                <el-form-item label="自定义合约">
-                    <el-switch v-model="create.useTemplate"></el-switch>
+                <el-form-item label="自定义合约" v-if="false">
+                    <el-switch v-model="create.useTemplate" disabled="false"></el-switch>
                     <el-tooltip class="item" effect="dark" placement="right">
                         <div slot="content">满足以下ABI
                             <br>[{
@@ -189,7 +189,7 @@
                 this.getData();
             },
             getData() {
-                this.$axios.get('/service/user/getOwned')
+                this.$axios.get('/service/user/getAdministrated')
                     .then((res) => {
                         for(var contract in res.data) {
                             this.tableData.push({
@@ -243,7 +243,7 @@
                 }
                 this.$axios.post(url, {
                     propertyName: this.tableData[this.idx].name,
-                    target: this.roles[this.form.name]
+                    target: this.form.name
                 }).then(res => {
                     this.$message.success('授权成功');
                 }).catch(err => {
