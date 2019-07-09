@@ -18,7 +18,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="120" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled()">添加用户</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">添加用户</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -157,12 +157,19 @@
             getData() {
                 this.$axios.get('/service/system/getRoles')
                 .then((res) => {
-                   for(var role in res.data) {
+                    for(let role in res.data) {
+                        let rcAddr = res.data[role];
+                        this.$axios.post('/service/user/checkAdmin', {
+                            name: role,
+                            admin: this.name
+                        }).then(res => {
                             this.tableData.push({
                                 name: role,
-                                address: res.data[role]
+                                address: rcAddr,
+                                isAdmin: res.data
                             });
-                        }
+                        })
+                    }
                 })
             },
             formatter(row, column) {
@@ -205,8 +212,8 @@
                 })
                 this.registerVisible = false;
             },
-            checkDisabled(){
-                return !(this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111');
+            checkDisabled(index, row){
+                return row.isAdmin;
             },
             calculPage() {
                 return this.sortedData.length;
