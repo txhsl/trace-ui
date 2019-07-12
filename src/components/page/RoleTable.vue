@@ -2,23 +2,23 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-group"></i> 权限管理</el-breadcrumb-item>
-                <el-breadcrumb-item>角色管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-group"></i> Permission Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Roles</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="handleNew()">申请新角色</el-button>
+                <el-input v-model="select_word" placeholder="Keyword" class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="search" @click="handleNew()">New</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="name" label="角色名" sortable>
+                <el-table-column prop="name" label="Role Name" sortable>
                 </el-table-column>
-                <el-table-column prop="address" label="地址" :formatter="formatter">
+                <el-table-column prop="address" label="Contract Address" :formatter="formatter">
                 </el-table-column>
-                <el-table-column label="操作" width="120" align="center">
+                <el-table-column label="Options" width="120" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">添加用户</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleRegister(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">Add User</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -29,15 +29,15 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="申请新角色" :visible.sync="createVisible" width="30%">
-            <el-form ref="form" :model="create" label-width="120px">
-                <el-form-item label="角色名">
+        <el-dialog title="Apply New" :visible.sync="createVisible" width="30%">
+            <el-form ref="form" :model="create" label-width="80px">
+                <el-form-item label="Name">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
-                <el-form-item label="自定义合约" v-if="false">
+                <el-form-item label="Existed Contract" v-if="false">
                     <el-switch v-model="create.useTemplate" disabled="false"></el-switch>
                     <el-tooltip class="item" effect="dark" placement="right">
-                        <div slot="content">满足以下ABI
+                        <div slot="content">The contract should satisfy:
                             <br>[{
                             <br>&emsp;&emsp;"constant":false,
                             <br>&emsp;&emsp;"inputs":[{"name":"_name","type":"string"},{"name":"_scAddr","type":"address"}],
@@ -67,27 +67,27 @@
                         <i class="el-icon-question"></i>
                     </el-tooltip>
                 </el-form-item>
-                <el-form-item label="合约地址" v-show="create.useTemplate">
+                <el-form-item label="Address" v-show="create.useTemplate">
                     <el-input v-model="create.address"></el-input>
                 </el-form-item>
             </el-form>
+
             <span slot="footer" class="dialog-footer">
-                <el-button @click="createVisible = false">取 消</el-button>
-                <el-button type="primary" @click="applyNew">确 定</el-button>
+                <el-button @click="createVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="applyNew">Confirm</el-button>
             </span>
 
         </el-dialog>
 
-        <!-- 编辑弹出框 -->
-        <el-dialog title="添加用户" :visible.sync="registerVisible" width="30%">
+        <el-dialog title="Add User" :visible.sync="registerVisible" width="30%">
             <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="地址">
+                <el-form-item label="Address">
                     <el-input v-model="form.address"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="registerVisible = false">取 消</el-button>
-                <el-button type="primary" @click="applyRegister">确 定</el-button>
+                <el-button @click="registerVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="applyRegister">Confirm</el-button>
             </span>
 
         </el-dialog>
@@ -195,9 +195,9 @@
                     admin: this.name,
                     address: this.create.address
                 }).then(res => {
-                    this.$message.success('请求成功');
+                    this.$message.success('Success!');
                 }).catch(err => {
-                    this.$message.error('请求失败');
+                    this.$message.error('Error!');
                 })
                 this.createVisible = false;
             },
@@ -206,9 +206,9 @@
                     address: this.form.address,
                     role: this.form.role
                 }).then(res => {
-                    this.$message.success('请求成功');
+                    this.$message.success('Success!');
                 }).catch(err => {
-                    this.$message.error('请求失败');
+                    this.$message.error('Error!');
                 })
                 this.registerVisible = false;
             },

@@ -2,29 +2,29 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 审计仲裁</el-breadcrumb-item>
-                <el-breadcrumb-item>仲裁检举</el-breadcrumb-item>
-                <el-breadcrumb-item>检举申请</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-search"></i> Report Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Report</el-breadcrumb-item>
+                <el-breadcrumb-item>Send</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
-                <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="交易ID">
+                <el-form ref="form" :model="form" label-width="120px">
+                    <el-form-item label="Transaction ID">
                         <el-input v-model="form.txid"></el-input>
                     </el-form-item>
-                    <el-form-item label="检举对象">
+                    <el-form-item label="Target User">
                         <el-input v-model="form.target"></el-input>
                     </el-form-item>
-                    <el-form-item label="检举金额">
+                    <el-form-item label="Amount">
                         <el-input-number v-model="form.amount" :min="1" :max="100"></el-input-number>
                     </el-form-item>
-                    <el-form-item label="检举原因">
+                    <el-form-item label="Reason">
                         <el-input type="textarea" rows="5" v-model="form.reason"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">提交</el-button>
-                        <el-button>取消</el-button>
+                        <el-button type="primary" @click="onSubmit">Submit</el-button>
+                        <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -56,13 +56,13 @@
                     reason: this.form.reason
                 }).then(res => {
                     if (res.data.result) {
-                        this.$message.success('提交成功！');
+                        this.$message.success('Success!');
                     }
                     else {
-                        this.$message.error('系统内未找到对应用户或者管理员！');
+                        this.$message.error('User or admin not found!');
                     }
                 }).catch(err => {
-                    this.$message.error('提交失败！');
+                    this.$message.error('Error!');
                 })
             }
         }

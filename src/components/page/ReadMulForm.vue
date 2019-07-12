@@ -2,16 +2,16 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
-                <el-breadcrumb-item>溯源查询</el-breadcrumb-item>
-                <el-breadcrumb-item>关键查询</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> Data Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Query</el-breadcrumb-item>
+                <el-breadcrumb-item>Multiple</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item v-for="(name,index) in form.names" :key="index" :label="getPropertyLabel(index+1)">
-                        <el-select v-model="form.names[index]" placeholder="请选择">
+                        <el-select v-model="form.names[index]" placeholder="">
                             <el-option v-for="item in properties" :value="item" :key="item" name="form.names[index]">
                                 {{item}}
                             </el-option>
@@ -30,8 +30,8 @@
                         <el-button type="danger" circle @click="deleteId()"><i class="el-icon-lx-move"></i></el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                        <el-button>取消</el-button>
+                        <el-button type="primary" @click="onSubmit">Submit</el-button>
+                        <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -39,15 +39,15 @@
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" label-width="80px">
-                    <el-form-item label="查询结果">
+                    <el-form-item label="Result">
                         <el-table :data="result" border class="table" ref="multipleTable">
                             <el-table-column prop="id" label="ID" sortable>
                             </el-table-column>
-                            <el-table-column prop="name" label="属性名">
+                            <el-table-column prop="name" label="Property Name">
                             </el-table-column>
-                            <el-table-column prop="data" label="内容">
+                            <el-table-column prop="data" label="Data">
                             </el-table-column>
-                            <el-table-column prop="status" label="状态">
+                            <el-table-column prop="status" label="Status">
                             </el-table-column>
                         </el-table>
                     </el-form-item>
@@ -84,7 +84,7 @@
                     ids: this.form.ids,
                     propertyNames: this.form.names
                 }).then(res => {
-                    this.$message.success('查询成功！');
+                    this.$message.success('Success!');
                     var temp = [];
                     for(var property in res.data.data) {
                         var single = res.data.data[property];
@@ -113,10 +113,10 @@
                 this.form.ids.pop();
             },
             getPropertyLabel(index) {
-                return "属性名"+index;
+                return "Property"+index;
             },
             getIdLabel(index) {
-                return "货品ID"+index;
+                return "ID"+index;
             }
         }
     }

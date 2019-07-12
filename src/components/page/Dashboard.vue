@@ -9,13 +9,13 @@
                             <div class="user-info-name">{{role}}</div>
                         </div>
                     </div>
-                    <div class="user-info-list">账户地址：<span>{{name}}</span></div>
-                    <div class="user-info-list">账户余额：<span>{{balance.toFixed(2)}} Ether</span></div>
-                    <div class="user-info-list">信用等级：<span>{{level}}</span></div>
+                    <div class="user-info-list">Address: <span>{{name}}</span></div>
+                    <div class="user-info-list">Balance: <span>{{balance.toFixed(2)}} Ether</span></div>
+                    <div class="user-info-list">Credit Rating: <span>{{level}}</span></div>
                 </el-card>
                 <el-card shadow="hover" style="height:520px;">
                     <div slot="header" class="clearfix">
-                        <span>各环节活跃度占比</span>
+                        <span>Tasks Amount by Role</span>
                     </div>
                     <div v-for="name in this.roleNames" :key="name">{{name}}
                         <el-progress :percentage="calculatePercentage(roleTxCounts[roleNames.indexOf(name)])" :color="colors[roleNames.indexOf(name)]"></el-progress>
@@ -30,7 +30,7 @@
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">{{roleNames.length}}</div>
-                                    <div>角色数量</div>
+                                    <div>Roles</div>
                                 </div>
                             </div>
                         </el-card>
@@ -41,7 +41,7 @@
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">{{propertyCount}}</div>
-                                    <div>属性数量</div>
+                                    <div>Properties</div>
                                 </div>
                             </div>
                         </el-card>
@@ -52,7 +52,7 @@
                                 <i class="el-icon-lx-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">{{txCount}}</div>
-                                    <div>交易数量</div>
+                                    <div>Tasks</div>
                                 </div>
                             </div>
                         </el-card>
@@ -92,7 +92,7 @@
                     value: 0,
                 }],
                 options: {
-                    title: '近期上链事件数量统计',
+                    title: 'Tasks Amount by Blockchain Height',
                     showValue: false,
                     fillColor: 'rgb(45, 140, 240)',
                     bottomPadding: 30,
@@ -107,18 +107,18 @@
         computed: {
             role() {
                 if (this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111') {
-                    return '系统管理员';
+                    return 'System Admin';
                 }
                 else if (this.leaders.includes(this.name)) {
-                    return this.roleNames[this.leaders.indexOf(this.name)] + '管理员';
+                    return this.roleNames[this.leaders.indexOf(this.name)] + ' Admin';
                 }
                 else {
                     for(var name in this.roles) {
                         if (this.roles[name] === this.rcAddr) {
-                            return name + "用户";
+                            return name + ' Normal User';
                         }
                     }
-                    return "游客";
+                    return "Visitor";
                 }
             }
         },
@@ -128,7 +128,7 @@
         mounted(){
             this.$axios.get("/service/system/getRoleNames")
                 .then(res => {
-                    this.roleNames = ["系统管理员"];
+                    this.roleNames = ["System Admin"];
                     res.data.forEach(name => {
                         this.roleNames.push(name);
                     })

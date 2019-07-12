@@ -2,37 +2,37 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-group"></i> 权限管理</el-breadcrumb-item>
-                <el-breadcrumb-item>权限一览</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-group"></i> Permission Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Permissions</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="select_cate" placeholder="筛选权限" class="handle-select mr10">
+                <el-select v-model="select_cate" placeholder="Type" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="查询" value="查询"></el-option>
-                    <el-option key="3" label="写入" value="写入"></el-option>
+                    <el-option key="2" label="Read" value="Read"></el-option>
+                    <el-option key="3" label="Write" value="Write"></el-option>
                 </el-select>
-                <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
+                <el-select v-model="select_status" placeholder="Status" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="可用" value="可用"></el-option>
-                    <el-option key="3" label="不可" value="不可"></el-option>
+                    <el-option key="2" label="Available" value="Available"></el-option>
+                    <el-option key="3" label="Unavailable" value="Unavailable"></el-option>
                 </el-select>
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" @click="getData()">刷新</el-button>
+                <el-input v-model="select_word" placeholder="Keyword" class="handle-input mr10"></el-input>
+                <el-button type="primary" @click="getData()">Refresh</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="name" label="属性名" sortable width="240">
+                <el-table-column prop="name" label="Property Name" sortable width="240">
                 </el-table-column>
-                <el-table-column prop="permission" label="权限类型" width="80">
+                <el-table-column prop="permission" label="Type" width="80">
                 </el-table-column>
-                <el-table-column prop="address" label="地址" :formatter="formatter">
+                <el-table-column prop="address" label="Contract Address" :formatter="formatter">
                 </el-table-column>
-                <el-table-column prop="status" label="状态" width="120">
+                <el-table-column prop="status" label="Status" width="120">
                 </el-table-column>
-                <el-table-column label="操作" width="80" align="center">
+                <el-table-column label="Options" width="80" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleApply(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">申请</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleApply(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">Apply</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -43,11 +43,11 @@
         </div>
 
         <!-- 申请提示框 -->
-        <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">确定发送申请给该属性管理员吗？</div>
+        <el-dialog title="Warning" :visible.sync="delVisible" width="300px" center>
+            <div class="del-dialog-cnt">This option will request the property admin for permission.</div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">取 消</el-button>
-                <el-button type="primary" @click="applyRow">确 定</el-button>
+                <el-button @click="delVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="applyRow">Comfirm</el-button>
             </span>
         </el-dialog>
     </div>
@@ -115,7 +115,7 @@
                     .then(res => {
                         return res.data;
                     }).catch(err => {
-                        this.$message.error('查询属性索引失败！');
+                        this.$message.error('Error!');
                     }).then(all => {
                         this.$axios.get('/service/user/getOwned')
                             .then(res => {
@@ -123,9 +123,9 @@
                                 for(var contract in res.data) {
                                     data.push({
                                         name: contract,
-                                        permission: '写入',
+                                        permission: 'Write',
                                         address: res.data[contract],
-                                        status: '可用'
+                                        status: 'Available'
                                     });
                                     temp.push(contract);
                                 }
@@ -133,14 +133,14 @@
                                     if (!temp.includes(property)) {
                                         data.push({
                                             name: property,
-                                            permission: '写入',
+                                            permission: 'Write',
                                             address: all[property],
-                                            status: '不可'
+                                            status: 'Unavailable'
                                         });
                                     }
                                 }
                             }).catch(err => {
-                                this.$message.error('查询拥有属性失败！');
+                                this.$message.error('Error!');
                             });
                         this.$axios.get('/service/user/getManaged')
                             .then(res => {
@@ -148,9 +148,9 @@
                                 for(var contract in res.data) {
                                     data.push({
                                         name: contract,
-                                        permission: '查询',
+                                        permission: 'Read',
                                         address: res.data[contract],
-                                        status: '可用'
+                                        status: 'Available'
                                     });
                                     temp.push(contract);
                                 }
@@ -158,14 +158,14 @@
                                     if (!temp.includes(property)) {
                                         data.push({
                                             name: property,
-                                            permission: '查询',
+                                            permission: 'Read',
                                             address: all[property],
-                                            status: '不可'
+                                            status: 'Unavailable'
                                         });
                                     }
                                 }
                             }).catch(err => {
-                                this.$message.error('查询管理属性失败！');
+                                this.$message.error('Error!');
                             });
 
                         this.tableData = data;
@@ -187,7 +187,7 @@
             },
             applyRow(){
                 var url = '';
-                if (this.select_row.permission==='查询') {
+                if (this.select_row.permission==='Read') {
                     url = '/service/user/requestReader';
                 }
                 else {
@@ -197,15 +197,15 @@
                     propertyName: this.select_row.name,
                     target: this.name
                 }).then(res => {
-                    this.$message.success('申请成功');
+                    this.$message.success('Success!');
                 }).catch(err => {
-                    this.$message.error('申请失败');
+                    this.$message.error('Error!');
                 })
                 
                 this.delVisible = false;
             },
             checkDisabled(index, row) {
-                return row.status === '可用';
+                return row.status === 'Available';
             },
             calculPage() {
                 return this.sortedData.length;

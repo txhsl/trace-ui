@@ -41,56 +41,56 @@
                     {
                         icon: 'el-icon-lx-home',
                         index: 'dashboard',
-                        title: '系统首页'
+                        title: 'Home'
                     },{
                         icon: 'el-icon-lx-group',
                         index: '1',
-                        title: '权限管理',
+                        title: 'Permission Management',
                         subs: [
                             {
                                 index: 'permission',
-                                title: '权限一览'
+                                title: 'Permissions'
                             },
                             {
                                 index: 'role',
-                                title: '角色管理'
+                                title: 'Roles'
                             },
                             {
                                 index: 'property',
-                                title: '属性管理'
+                                title: 'Properties'
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-lx-qrcode',
                         index: '2',
-                        title: '存证溯源',
+                        title: 'Data Management',
                         subs: [
                             {
                                 index: '2-1',
-                                title: '存证提交',
+                                title: 'Save',
                                 subs: [
                                     {
                                         index: 'write',
-                                        title: '单个提交'
+                                        title: 'Single'
                                     },
                                     {
                                         index: 'writeMultiple',
-                                        title: '批量提交'
+                                        title: 'Multiple'
                                     }
                                 ]
                             },
                             {
                                 index: '2-2',
-                                title: '溯源查询',
+                                title: 'Query',
                                 subs: [
                                     {
                                         index: 'read',
-                                        title: '完整查询'
+                                        title: 'Single'
                                     },
                                     {
                                         index: 'readMultiple',
-                                        title: '关键查询'
+                                        title: 'Multiple'
                                     }
                                 ]
                             }
@@ -99,50 +99,50 @@
                     {
                         icon: 'el-icon-lx-attention',
                         index: '3',
-                        title: '实时监测',
+                        title: 'Monitor',
                         subs: [
                             {
                                 icon: 'el-icon-lx-sort',
                                 index: 'transaction',
-                                title: '任务一览'
+                                title: 'Tasks'
                             },
                             {
                                 icon: 'el-icon-lx-attention',
                                 index: 'subscribe',
-                                title: '订阅管理'
+                                title: 'Subscriptions'
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-lx-search',
                         index: '4',
-                        title: '审计仲裁',
+                        title: 'Report Management',
                         subs: [
                             {
                                 index: '4-1',
-                                title: '历史审计',
+                                title: 'Audit',
                                 subs: [
                                     {
                                         index: 'auditProperty',
-                                        title: '数据审计'
+                                        title: 'By Receiver'
                                     },
                                     {
                                         index: 'auditUser',
-                                        title: '用户审计'
+                                        title: 'By Sender'
                                     }
                                 ]
                             },
                             {
                                 index: '4-2',
-                                title: '仲裁检举',
+                                title: 'Report',
                                 subs: [
                                     {
                                         index: 'report',
-                                        title: '检举申请'
+                                        title: 'Send'
                                     },
                                     {
                                         index: 'arbitrate',
-                                        title: '仲裁处理'
+                                        title: 'Handle'
                                     }
                                 ]
                             }
@@ -151,7 +151,7 @@
                     {
                         icon: 'el-icon-lx-message',
                         index: 'message',
-                        title: '消息中心'
+                        title: 'Messages'
                     }
                 ]
             }

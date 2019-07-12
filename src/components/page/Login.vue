@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">存证溯源管理系统</div>
+            <div class="ms-title">IoT Data Management System for Supply Chain</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="username">
@@ -14,9 +14,9 @@
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">Login</el-button>
                 </div>
-                <p class="login-tips">Tips : 使用以太坊地址和密码登录。<router-link to="register" style="float:right;color: #fff;">申请正式注册</router-link></p>
+                <p class="login-tips">Tips : Log in with ETH account.<router-link to="register" style="float:right;color: #fff;">申请正式注册</router-link></p>
             </el-form>
         </div>
     </div>
@@ -32,10 +32,10 @@
                 },
                 rules: {
                     username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                        { required: true, message: 'User account needed', trigger: 'blur' }
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
+                        { required: true, message: 'Password needed', trigger: 'blur' }
                     ]
                 }
             }
@@ -54,7 +54,7 @@
                                 localStorage.setItem('ms_username',this.ruleForm.username);
                             }
                         }).catch(error => {
-                            this.$message.error('登录失败');
+                            this.$message.error('Error');
                         })
                     } else {
                         console.log('error submit!!');

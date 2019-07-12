@@ -2,17 +2,17 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
-                <el-breadcrumb-item>存证提交</el-breadcrumb-item>
-                <el-breadcrumb-item>批量提交</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> Data Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Write</el-breadcrumb-item>
+                <el-breadcrumb-item>Multiple</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-row v-for="(item,index) in form" :key="index">
-                    <el-form ref="form" :model="item" label-width="80px">
-                        <el-form-item label="属性名">
-                            <el-select v-model="item.name" placeholder="请选择">
+                    <el-form ref="form" :model="item" label-width="120px">
+                        <el-form-item label="Property Name">
+                            <el-select v-model="item.name" placeholder="">
                                 <el-option v-for="property in properties" :value="property" :key="property" name="form.name">
                                     {{property}}
                                 </el-option>
@@ -20,10 +20,10 @@
                         </el-form-item>
                         <el-form-item v-for="(single,dindex) in item.data" :key="dindex">
                             <el-card>
-                                <el-form-item label="货品ID">
+                                <el-form-item label="Data ID">
                                     <el-input v-model="single.id"></el-input>
                                 </el-form-item>
-                                <el-form-item label="存证内容">
+                                <el-form-item label="Content">
                                     <el-input type="textarea" rows="5" v-model="single.desc"></el-input>
                                 </el-form-item>
                             </el-card>
@@ -38,16 +38,16 @@
                     <el-form ref="form" label-width="80px">
                         <el-form-item>
                             <el-button-group>
-                                <el-button type="success" @click="addProperty()"><i class="el-icon-lx-add"></i>增加属性条目</el-button>
-                                <el-button type="danger" @click="deleteProperty()">减少属性条目<i class="el-icon-lx-move"></i></el-button>
+                                <el-button type="success" @click="addProperty()"><i class="el-icon-lx-add"></i>Add</el-button>
+                                <el-button type="danger" @click="deleteProperty()">Delete<i class="el-icon-lx-move"></i></el-button>
                             </el-button-group>
                         </el-form-item>
                     </el-form>
                 </el-row>
                 <el-form label-width="80px">
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">提交</el-button>
-                        <el-button>取消</el-button>
+                        <el-button type="primary" @click="onSubmit">Submit</el-button>
+                        <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -94,9 +94,9 @@
                 this.$axios.post("/service/data/writeMultiple", {
                     data: req,
                 }).then(res => {
-                    this.$message.success('提交成功！快照编号' + res.data);
+                    this.$message.success('Success! Snapshot ID: ' + res.data);
                 }).catch(err => {
-                    this.$message.error('提交失败！');
+                    this.$message.error('Error!');
                 })
             },
             addProperty() {

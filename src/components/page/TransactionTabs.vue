@@ -2,115 +2,115 @@
     <div class="">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> 实时监测</el-breadcrumb-item>
-                <el-breadcrumb-item>任务一览</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> Monitor</el-breadcrumb-item>
+                <el-breadcrumb-item>Tasks</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <el-tabs v-model="message">
-                <el-tab-pane :label="`已完成(${completed.length})`" name="first">
+                <el-tab-pane :label="`Completed(${completed.length})`" name="first">
                     <el-table :data="completed" style="width: 100%">
                         <el-table-column type="expand">
                             <template slot-scope="props">
                                 <el-form label-position="left" inline class="task-table-expand">
-                                    <el-form-item label="任务主题">
+                                    <el-form-item label="Task Title">
                                         <span>{{ props.row.title }}</span>
                                     </el-form-item>
-                                    <el-form-item label="任务内容">
+                                    <el-form-item label="Content">
                                         <span>{{ props.row.content }}</span>
                                     </el-form-item>
-                                    <el-form-item label="发送者">
+                                    <el-form-item label="Sender">
                                         <span>{{ props.row.sender }}</span>
                                     </el-form-item>
-                                    <el-form-item label="任务状态">
-                                        <span>{{ props.row.status.done ? "已完成" : "未完成"}}</span>
+                                    <el-form-item label="Status">
+                                        <span>{{ props.row.status.done ? "Completed" : "Pending"}}</span>
                                     </el-form-item>
-                                    <el-form-item label="交易Hash">
+                                    <el-form-item label="Transaction Hash">
                                         <span>{{ props.row.receipt.transactionHash }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Gas花费">
+                                    <el-form-item label="Gas Cost">
                                         <span>{{ props.row.receipt.gasUsed }}</span>
                                     </el-form-item>
-                                    <el-form-item label="所在区块">
+                                    <el-form-item label="Block Hash">
                                         <span>{{ props.row.receipt.blockHash }}</span>
                                     </el-form-item>
-                                    <el-form-item label="所在高度">
+                                    <el-form-item label="Block Number">
                                         <span>{{ props.row.receipt.blockNumber }}</span>
                                     </el-form-item>
-                                    <el-form-item label="交易日志">
+                                    <el-form-item label="Logs">
                                         <span>{{ props.row.receipt.logs }}</span>
                                     </el-form-item>
                                 </el-form>
                             </template>
                         </el-table-column>
-                        <el-table-column label='任务主题'>
+                        <el-table-column label='Title'>
                             <template slot-scope="scope">
                                 <span class="message-title">{{scope.row.title}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="content" label='任务内容' width="300"></el-table-column>
-                        <el-table-column prop="sender" label='发送者' width="300"></el-table-column>
+                        <el-table-column prop="content" label='Content' width="300"></el-table-column>
+                        <el-table-column prop="sender" label='Sender' width="300"></el-table-column>
                     </el-table>
                 </el-tab-pane>
-                <el-tab-pane :label="`正在处理(${pending.length})`" name="second">
+                <el-tab-pane :label="`Pending(${pending.length})`" name="second">
                     <template v-if="message === 'second'">
                         <el-table :data="pending" style="width: 100%">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-form label-position="left" inline class="task-table-expand">
-                                        <el-form-item label="任务主题">
+                                        <el-form-item label="Task Title">
                                             <span>{{ props.row.title }}</span>
                                         </el-form-item>
-                                        <el-form-item label="任务内容">
+                                        <el-form-item label="Content">
                                             <span>{{ props.row.content }}</span>
                                         </el-form-item>
-                                        <el-form-item label="发送者">
+                                        <el-form-item label="Sender">
                                             <span>{{ props.row.sender }}</span>
                                         </el-form-item>
-                                        <el-form-item label="任务状态">
-                                            <span>{{ props.row.status.done ? "已完成" : "未完成"}}</span>
+                                        <el-form-item label="Status">
+                                            <span>{{ props.row.status.done ? "Completed" : "Pending"}}</span>
                                         </el-form-item>
                                     </el-form>
                                 </template>
                             </el-table-column>
-                            <el-table-column label='任务主题'>
+                            <el-table-column label='Title'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="content" label='任务内容' width="300"></el-table-column>
-                            <el-table-column prop="sender" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="content" label='Content' width="300"></el-table-column>
+                            <el-table-column prop="sender" label='Sender' width="300"></el-table-column>
                         </el-table>
                     </template>
                 </el-tab-pane>
-                <el-tab-pane :label="`异常交易(${error.length})`" name="third">
+                <el-tab-pane :label="`Error(${error.length})`" name="third">
                     <template v-if="message === 'third'">
                         <el-table :data="error" style="width: 100%">
                             <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-form label-position="left" inline class="task-table-expand">
-                                        <el-form-item label="任务主题">
+                                        <el-form-item label="Task Title">
                                             <span>{{ props.row.title }}</span>
                                         </el-form-item>
-                                        <el-form-item label="任务内容">
+                                        <el-form-item label="Content">
                                             <span>{{ props.row.content }}</span>
                                         </el-form-item>
-                                        <el-form-item label="发送者">
+                                        <el-form-item label="Sender">
                                             <span>{{ props.row.sender }}</span>
                                         </el-form-item>
-                                        <el-form-item label="任务状态">
-                                            <span>{{ props.row.status.cancelled ? "已取消" : "异常"}}</span>
+                                        <el-form-item label="Status">
+                                            <span>{{ props.row.status.cancelled ? "Cancelled" : "Error"}}</span>
                                         </el-form-item>
                                     </el-form>
                                 </template>
                             </el-table-column>
-                            <el-table-column label='任务主题'>
+                            <el-table-column label='Title'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="content" label='任务内容' width="300"></el-table-column>
-                            <el-table-column prop="sender" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="content" label='Content' width="300"></el-table-column>
+                            <el-table-column prop="sender" label='Sender' width="300"></el-table-column>
                         </el-table>
                     </template>
                 </el-tab-pane>
@@ -146,7 +146,7 @@
                         });
                     })
                     .catch(err => {
-                        this.$message.error('获取失败：已完成交易');
+                        this.$message.error('Fail to load: Completed');
                     });
                 this.$axios.get('/service/transaction/pending')
                     .then(res => {
@@ -160,7 +160,7 @@
                         });
                     })
                     .catch(err => {
-                        this.$message.error('获取失败：未完成交易');
+                        this.$message.error('Fail to load: Pending');
                     });
                 this.$axios.get('/service/transaction/error')
                     .then(res => {
@@ -174,7 +174,7 @@
                         });
                     })
                     .catch(err => {
-                        this.$message.error('获取失败：异常交易');
+                        this.$message.error('Fail to load: Error');
                     });
             }
         },
@@ -201,7 +201,7 @@
     font-size: 0;
 }
 .task-table-expand label {
-    width: 90px;
+    width: 150px;
     color: #99a9bf;
 }
 .task-table-expand .el-form-item {

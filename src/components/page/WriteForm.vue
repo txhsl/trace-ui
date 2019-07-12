@@ -2,30 +2,30 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 存证溯源</el-breadcrumb-item>
-                <el-breadcrumb-item>存证提交</el-breadcrumb-item>
-                <el-breadcrumb-item>单个提交</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> Data Management</el-breadcrumb-item>
+                <el-breadcrumb-item>Write</el-breadcrumb-item>
+                <el-breadcrumb-item>Single</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
-                <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="属性名">
-                        <el-select v-model="form.name" placeholder="请选择">
+                <el-form ref="form" :model="form" label-width="120px">
+                    <el-form-item label="Property Name">
+                        <el-select v-model="form.name" placeholder="">
                             <el-option v-for="item in properties" :value="item" :key="item" name="form.name">
                                 {{item}}
                             </el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="货品ID">
+                    <el-form-item label="Data ID">
                         <el-input v-model="form.id"></el-input>
                     </el-form-item>
-                    <el-form-item label="存证内容">
+                    <el-form-item label="Content">
                         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">提交</el-button>
-                        <el-button>取消</el-button>
+                        <el-button type="primary" @click="onSubmit">Submit</el-button>
+                        <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -60,9 +60,9 @@
                     propertyName: this.form.name,
                     data: this.form.desc
                 }).then(res => {
-                    this.$message.success('提交成功！文件编号' + res.data);
+                    this.$message.success('Success! Snapshot ID: ' + res.data);
                 }).catch(err => {
-                    this.$message.error('提交失败！');
+                    this.$message.error('Error!');
                 })
             }
         }

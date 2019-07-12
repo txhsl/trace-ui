@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">存证溯源管理系统</div>
+            <div class="ms-title">IoT Data Management System for Supply Chain</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="username">
@@ -14,17 +14,16 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-select v-model="ruleForm.role" placeholder="请选择生产环节">
+                    <el-select v-model="ruleForm.role" placeholder="Role">
                         <el-option v-for="item in roles" :value="item" :key="item" name="ruleForm.role">
                             {{item}}
                         </el-option>
                     </el-select>
-                    <el-checkbox v-model="ruleForm.checked" style="margin-left: 50px;"><span style="color: #fff;">同意抵押500Wei</span></el-checkbox>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">申请</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">Apply</el-button>
                 </div>
-                <p class="login-tips">Tips : 使用以太坊钱包地址和钱包密码注册。<router-link to="login" style="float:right;color: #fff;">已经不是游客</router-link></p>
+                <p class="login-tips">Tips : Log up with ETH account.<router-link to="login" style="float:right;color: #fff;">Log in</router-link></p>
             </el-form>
         </div>
     </div>
@@ -42,16 +41,13 @@
                 },
                 rules: {
                     username: [
-                        { required: true, message: '请输入以太坊地址', trigger: 'blur' }
+                        { required: true, message: 'User address needed', trigger: 'blur' }
                     ],
                     role: [
-                        { required: true, message: '请选择申请的角色组', trigger: 'blur' }
+                        { required: true, message: 'Target role needed', trigger: 'blur' }
                     ],
                     password: [
-                        { required: true, message: '请输入钱包密码', trigger: 'blur' }
-                    ],
-                    checked: [
-                        { required: true, message: '请同意抵押操作', trigger: 'blur' }
+                        { required: true, message: 'Password needed', trigger: 'blur' }
                     ]
                 },
                 roles: []
@@ -80,7 +76,7 @@
                                 localStorage.setItem('ms_username',this.ruleForm.username);
                             }
                         }).catch(error => {
-                            this.$message.error('申请失败');
+                            this.$message.error('Error');
                         })
                     } else {
                         console.log('error submit!!');
