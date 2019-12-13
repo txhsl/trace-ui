@@ -48,7 +48,7 @@
                                     <el-form-item label="To">
                                         <span>{{ props.row.to }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Gas Cost">
+                                    <el-form-item label="Gas Paid">
                                         <span>{{ props.row.gas}}</span>
                                     </el-form-item>
                                     <el-form-item label="Nonce">

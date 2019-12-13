@@ -9,7 +9,7 @@
         <div class="container">
             <el-tabs v-model="message">
                 <el-tab-pane :label="`Completed(${completed.length})`" name="first">
-                    <el-table :data="completed" style="width: 100%">
+                    <el-table :data="completed" style="width:100%">
                         <el-table-column type="expand">
                             <template slot-scope="props">
                                 <el-form label-position="left" inline class="task-table-expand">
@@ -38,7 +38,7 @@
                                         <span>{{ props.row.receipt.blockNumber }}</span>
                                     </el-form-item>
                                     <el-form-item label="Logs">
-                                        <span>{{ props.row.receipt.logs }}</span>
+                                        <pre>{{ props.row.receipt.logs }}</pre>
                                     </el-form-item>
                                 </el-form>
                             </template>
