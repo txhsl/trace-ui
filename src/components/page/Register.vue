@@ -1,29 +1,29 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">IoT Data Management System for Supply Chain</div>
+            <div class="ms-title">溯源数据管理系统</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                    <el-input v-model="ruleForm.username" placeholder="账户地址">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
+                    <el-input type="password" placeholder="密码" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-select v-model="ruleForm.role" placeholder="Role">
+                    <el-select v-model="ruleForm.role" placeholder="申请角色">
                         <el-option v-for="item in roles" :value="item" :key="item" name="ruleForm.role">
                             {{item}}
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">Apply</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">提交申请</el-button>
                 </div>
-                <p class="login-tips">Tips : Log up with ETH account.<router-link to="login" style="float:right;color: #fff;">Log in</router-link></p>
+                <p class="login-tips">Tips: 使用钱包地址进行申请<router-link to="login" style="float:right;color: #fff;">已经是用户</router-link></p>
             </el-form>
         </div>
     </div>

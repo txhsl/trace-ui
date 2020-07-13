@@ -2,96 +2,96 @@
     <div class="">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-message"></i> Messages</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-message"></i> 消息中心</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <el-tabs v-model="message">
-                <el-tab-pane :label="`New(${unread.length})`" name="first">
+                <el-tab-pane :label="`新消息(${unread.length})`" name="first">
                     <el-table :data="unread" style="width: 100%">
-                        <el-table-column label='Title'>
+                        <el-table-column label='标题'>
                             <template slot-scope="scope">
                                 <span class="message-title">{{scope.row.title}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="type" label='Type' width="160"></el-table-column>
-                        <el-table-column prop="target" label='From' width="300"></el-table-column>
-                        <el-table-column prop="date" label='Time' width="150"></el-table-column>
+                        <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                        <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                        <el-table-column prop="date" label='发送时间' width="150"></el-table-column>
                         <el-table-column width="180">
                             <template slot-scope="scope">
-                                <el-button type="primary" size="small" @click="handleAccept(scope.$index, scope.row)">Accept</el-button>
-                                <el-button size="small" @click="handleIgnore(scope.$index, scope.row)">Ignore</el-button>
+                                <el-button type="primary" size="small" @click="handleAccept(scope.$index, scope.row)">接受</el-button>
+                                <el-button size="small" @click="handleIgnore(scope.$index, scope.row)">忽略</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
                     <div class="handle-row">
-                        <el-button type="primary" @click="handleIgnoreAll()">Ignore All</el-button>
+                        <el-button type="primary" @click="handleIgnoreAll()">忽略全部</el-button>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane :label="`Accepted(${accepted.length})`" name="second">
+                <el-tab-pane :label="`已接受(${accepted.length})`" name="second">
                     <template v-if="message === 'second'">
                         <el-table :data="accepted" style="width: 100%">
-                            <el-table-column label='Title'>
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" label='Type' width="160"></el-table-column>
-                            <el-table-column prop="target" label='From' width="300"></el-table-column>
-                            <el-table-column prop="date" label='Time' width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='发送时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
-                                    <el-button type="danger" @click="handleDelAcp(scope.$index, scope.row)">Delete</el-button>
+                                    <el-button type="danger" @click="handleDelAcp(scope.$index, scope.row)">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <div class="handle-row">
-                            <el-button type="danger" @click="handleDeleteAll()">Delete All</el-button>
+                            <el-button type="danger" @click="handleDeleteAll()">删除全部</el-button>
                         </div>
                     </template>
                 </el-tab-pane>
-                <el-tab-pane :label="`Ignored(${ignored.length})`" name="third">
+                <el-tab-pane :label="`已忽略(${ignored.length})`" name="third">
                     <template v-if="message === 'third'">
                         <el-table :data="ignored" style="width: 100%">
-                            <el-table-column label='Title'>
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" label='Type' width="160"></el-table-column>
-                            <el-table-column prop="target" label='From' width="300"></el-table-column>
-                            <el-table-column prop="date" label='Time' width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='发送时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
-                                    <el-button type="primary" size="small" @click="handleAcceptIgn(scope.$index, scope.row)">Accept</el-button>
-                                    <el-button @click="handleDelIgn(scope.$index, scope.row)">Delete</el-button>
+                                    <el-button type="primary" size="small" @click="handleAcceptIgn(scope.$index, scope.row)">接受</el-button>
+                                    <el-button @click="handleDelIgn(scope.$index, scope.row)">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <div class="handle-row">
-                            <el-button type="danger" @click="handleDeleteAllIgn()">Delete All</el-button>
+                            <el-button type="danger" @click="handleDeleteAllIgn()">删除全部</el-button>
                         </div>
                     </template>
                 </el-tab-pane>
-                <el-tab-pane :label="`Receipts(${receipts.length})`" name="fourth">
+                <el-tab-pane :label="`处理结果(${receipts.length})`" name="fourth">
                     <template v-if="message === 'fourth'">
                         <el-table :data="receipts" style="width: 100%">
-                            <el-table-column label='Title'>
+                            <el-table-column label='标题'>
                                 <template slot-scope="scope">
                                     <span class="message-title">{{scope.row.title}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" label='Type' width="160"></el-table-column>
-                            <el-table-column prop="target" label='From' width="300"></el-table-column>
-                            <el-table-column prop="date" label='Time' width="150"></el-table-column>
+                            <el-table-column prop="type" label='类型' width="160"></el-table-column>
+                            <el-table-column prop="target" label='发送者' width="300"></el-table-column>
+                            <el-table-column prop="date" label='发送时间' width="150"></el-table-column>
                             <el-table-column width="180">
                                 <template slot-scope="scope">
-                                    <el-button @click="handleDelRcp(scope.$index, scope.row)">Delete</el-button>
+                                    <el-button @click="handleDelRcp(scope.$index, scope.row)">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
                         <div class="handle-row">
-                            <el-button type="danger" @click="handleDeleteAllRcp()">Delete All</el-button>
+                            <el-button type="danger" @click="handleDeleteAllRcp()">删除全部</el-button>
                         </div>
                     </template>
                 </el-tab-pane>
@@ -218,18 +218,18 @@
             localize(type, isRead) {
                 switch(type) {
                     case '注册':
-                        return 'Register';
+                        return '注册申请';
                     case '属性':
-                        return 'Property';
+                        return '属性申请';
                     case '角色':
-                        return 'Role';
+                        return '角色申请';
                     case '权限':
                         if(isRead)
-                            return 'Read Permission';
+                            return '读权限申请';
                         else
-                            return 'Write Permission';
+                            return '写权限申请';
                     case '检举':
-                        return 'Report';
+                        return '仲裁申请';
                     default:
                         return '';
                 }

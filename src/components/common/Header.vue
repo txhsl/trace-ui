@@ -4,18 +4,18 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">IoT Data Management System for Supply Chain</div>
+        <div class="logo">溯源数据管理系统</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
                 <div class="btn-fullscreen" @click="handleFullScreen">
-                    <el-tooltip effect="dark" :content="fullscreen?`Cancel`:`Full screen`" placement="bottom">
+                    <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏显示`" placement="bottom">
                         <i class="el-icon-rank"></i>
                     </el-tooltip>
                 </div>
                 <!-- 消息中心 -->
                 <div class="btn-bell">
-                    <el-tooltip effect="dark" :content="message>0?`${message} new messages`:`Messages`" placement="bottom">
+                    <el-tooltip effect="dark" :content="message>0?`${message}条新消息`:`消息中心`" placement="bottom">
                         <router-link to="/message">
                             <i class="el-icon-bell"></i>
                         </router-link>
@@ -31,12 +31,12 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <a href="https://github.com/txhsl" target="_blank">
-                            <el-dropdown-item>About</el-dropdown-item>
+                            <el-dropdown-item>关于</el-dropdown-item>
                         </a>
-                        <a href="https://github.com/txhsl/IoT-tracking-system-ui" target="_blank">
-                            <el-dropdown-item>Git Repository</el-dropdown-item>
+                        <a href="https://github.com/txhsl/trace-ui" target="_blank">
+                            <el-dropdown-item>Git仓库</el-dropdown-item>
                         </a>
-                        <el-dropdown-item divided  command="loginout">Log out</el-dropdown-item>
+                        <el-dropdown-item divided  command="loginout">注销</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>

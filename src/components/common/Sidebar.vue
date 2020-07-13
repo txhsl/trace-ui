@@ -41,56 +41,56 @@
                     {
                         icon: 'el-icon-lx-home',
                         index: 'dashboard',
-                        title: 'Home'
+                        title: '系统状态'
                     },{
                         icon: 'el-icon-lx-group',
                         index: '1',
-                        title: 'Permission Management',
+                        title: '权限管理',
                         subs: [
                             {
                                 index: 'permission',
-                                title: 'Permissions'
+                                title: '权限一览'
                             },
                             {
                                 index: 'role',
-                                title: 'Roles'
+                                title: '角色一览'
                             },
                             {
                                 index: 'property',
-                                title: 'Properties'
+                                title: '属性一览'
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-lx-qrcode',
                         index: '2',
-                        title: 'Data Management',
+                        title: '数据管理',
                         subs: [
                             {
                                 index: '2-1',
-                                title: 'Save',
+                                title: '写入',
                                 subs: [
                                     {
                                         index: 'write',
-                                        title: 'Single'
+                                        title: '简单写入'
                                     },
                                     {
                                         index: 'writeMultiple',
-                                        title: 'Multiple'
+                                        title: '批量写入'
                                     }
                                 ]
                             },
                             {
                                 index: '2-2',
-                                title: 'Query',
+                                title: '查询',
                                 subs: [
                                     {
                                         index: 'read',
-                                        title: 'Single'
+                                        title: '简单查询'
                                     },
                                     {
                                         index: 'readMultiple',
-                                        title: 'Multiple'
+                                        title: '精确查询'
                                     }
                                 ]
                             }
@@ -99,50 +99,50 @@
                     {
                         icon: 'el-icon-lx-attention',
                         index: '3',
-                        title: 'Monitor',
+                        title: '后台管理',
                         subs: [
                             {
                                 icon: 'el-icon-lx-sort',
                                 index: 'transaction',
-                                title: 'Tasks'
+                                title: '后台任务'
                             },
                             {
                                 icon: 'el-icon-lx-attention',
                                 index: 'subscribe',
-                                title: 'Subscriptions'
+                                title: '后台监听'
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-lx-search',
                         index: '4',
-                        title: 'Report Management',
+                        title: '数据审计',
                         subs: [
                             {
                                 index: '4-1',
-                                title: 'Audit',
+                                title: '审计',
                                 subs: [
                                     {
                                         index: 'auditProperty',
-                                        title: 'By Receiver'
+                                        title: '合约审计'
                                     },
                                     {
                                         index: 'auditUser',
-                                        title: 'By Sender'
+                                        title: '用户审计'
                                     }
                                 ]
                             },
                             {
                                 index: '4-2',
-                                title: 'Report',
+                                title: '举报',
                                 subs: [
                                     {
                                         index: 'report',
-                                        title: 'Send'
+                                        title: '发送举报'
                                     },
                                     {
                                         index: 'arbitrate',
-                                        title: 'Handle'
+                                        title: '处理举报'
                                     }
                                 ]
                             }
@@ -151,7 +151,7 @@
                     {
                         icon: 'el-icon-lx-message',
                         index: 'message',
-                        title: 'Messages'
+                        title: '消息中心'
                     }
                 ]
             }

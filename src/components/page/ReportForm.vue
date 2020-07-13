@@ -2,29 +2,29 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-search"></i> Report Management</el-breadcrumb-item>
-                <el-breadcrumb-item>Report</el-breadcrumb-item>
-                <el-breadcrumb-item>Send</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-search"></i> 数据审计</el-breadcrumb-item>
+                <el-breadcrumb-item>举报</el-breadcrumb-item>
+                <el-breadcrumb-item>发送举报</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="120px">
-                    <el-form-item label="Transaction ID">
+                    <el-form-item label="交易哈希">
                         <el-input v-model="form.txid"></el-input>
                     </el-form-item>
-                    <el-form-item label="Target User">
+                    <el-form-item label="目标用户">
                         <el-input v-model="form.target"></el-input>
                     </el-form-item>
-                    <el-form-item label="Amount">
+                    <el-form-item label="保证金额">
                         <el-input-number v-model="form.amount" :min="1" :max="100"></el-input-number>
                     </el-form-item>
-                    <el-form-item label="Reason">
+                    <el-form-item label="举报原因">
                         <el-input type="textarea" rows="5" v-model="form.reason"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">Submit</el-button>
-                        <el-button>Cancel</el-button>
+                        <el-button type="primary" @click="onSubmit">提交</el-button>
+                        <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
             </div>

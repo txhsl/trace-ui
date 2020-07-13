@@ -2,37 +2,37 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-group"></i> Permission Management</el-breadcrumb-item>
-                <el-breadcrumb-item>Permissions</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-group"></i> 权限管理</el-breadcrumb-item>
+                <el-breadcrumb-item>权限一览</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="select_cate" placeholder="Type" class="handle-select mr10">
+                <el-select v-model="select_cate" placeholder="类型" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="Read" value="Read"></el-option>
-                    <el-option key="3" label="Write" value="Write"></el-option>
+                    <el-option key="2" label="读权限" value="Read"></el-option>
+                    <el-option key="3" label="写权限" value="Write"></el-option>
                 </el-select>
-                <el-select v-model="select_status" placeholder="Status" class="handle-select mr10">
+                <el-select v-model="select_status" placeholder="权限状态" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="Available" value="Available"></el-option>
-                    <el-option key="3" label="Unavailable" value="Unavailable"></el-option>
+                    <el-option key="2" label="可用" value="Available"></el-option>
+                    <el-option key="3" label="不可用" value="Unavailable"></el-option>
                 </el-select>
-                <el-input v-model="select_word" placeholder="Keyword" class="handle-input mr10"></el-input>
-                <el-button type="primary" @click="getData()">Refresh</el-button>
+                <el-input v-model="select_word" placeholder="关键词" class="handle-input mr10"></el-input>
+                <el-button type="primary" @click="getData()">刷新</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="name" label="Property Name" sortable width="240">
+                <el-table-column prop="name" label="属性名" sortable width="240">
                 </el-table-column>
-                <el-table-column prop="permission" label="Type" width="80">
+                <el-table-column prop="permission" label="权限类型" width="80">
                 </el-table-column>
-                <el-table-column prop="address" label="Contract Address" :formatter="formatter">
+                <el-table-column prop="address" label="合约地址" :formatter="formatter">
                 </el-table-column>
-                <el-table-column prop="status" label="Status" width="120">
+                <el-table-column prop="status" label="状态" width="120">
                 </el-table-column>
-                <el-table-column label="Options" width="80" align="center">
+                <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleApply(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">Apply</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleApply(scope.$index, scope.row)" :disabled="checkDisabled(scope.$index, scope.row)">申请</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -43,11 +43,11 @@
         </div>
 
         <!-- 申请提示框 -->
-        <el-dialog title="Warning" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">This option will request the property admin for permission.</div>
+        <el-dialog title="请注意" :visible.sync="delVisible" width="300px" center>
+            <div class="del-dialog-cnt">此操作将向属性的所有者发送申请消息</div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="delVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="applyRow">Comfirm</el-button>
+                <el-button @click="delVisible = false">取消</el-button>
+                <el-button type="primary" @click="applyRow">确定</el-button>
             </span>
         </el-dialog>
     </div>

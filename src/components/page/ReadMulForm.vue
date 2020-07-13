@@ -2,9 +2,9 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> Data Management</el-breadcrumb-item>
-                <el-breadcrumb-item>Query</el-breadcrumb-item>
-                <el-breadcrumb-item>Multiple</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-qrcode"></i> 数据管理</el-breadcrumb-item>
+                <el-breadcrumb-item>查询</el-breadcrumb-item>
+                <el-breadcrumb-item>精确查询</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -30,7 +30,7 @@
                         <el-button type="danger" circle @click="deleteId()"><i class="el-icon-lx-move"></i></el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit">Submit</el-button>
+                        <el-button type="primary" @click="onSubmit">提交</el-button>
                         <el-button>Cancel</el-button>
                     </el-form-item>
                 </el-form>
@@ -39,15 +39,15 @@
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" label-width="80px">
-                    <el-form-item label="Result">
+                    <el-form-item label="结果">
                         <el-table :data="result" border class="table" ref="multipleTable">
-                            <el-table-column prop="id" label="ID" sortable>
+                            <el-table-column prop="id" label="数据ID" sortable>
                             </el-table-column>
-                            <el-table-column prop="name" label="Property Name">
+                            <el-table-column prop="name" label="属性名">
                             </el-table-column>
-                            <el-table-column prop="data" label="Data">
+                            <el-table-column prop="data" label="数据内容">
                             </el-table-column>
-                            <el-table-column prop="status" label="Status">
+                            <el-table-column prop="status" label="数据状态">
                             </el-table-column>
                         </el-table>
                     </el-form-item>
@@ -113,10 +113,10 @@
                 this.form.ids.pop();
             },
             getPropertyLabel(index) {
-                return "Property"+index;
+                return "属性名"+index;
             },
             getIdLabel(index) {
-                return "ID"+index;
+                return "数据ID"+index;
             }
         }
     }

@@ -1,12 +1,12 @@
 <template>
   <div class="error-page">
       <div class="error-code">4<span>0</span>3</div>
-      <div class="error-desc">Access Denied.</div>
+      <div class="error-desc">访问权限不足</div>
       <div class="error-handle">
           <router-link to="/">
-            <el-button type="primary" size="large">Home</el-button>
+            <el-button type="primary" size="large">主页</el-button>
           </router-link>
-          <el-button class="error-btn" type="primary" size="large" @click="goBack">Back</el-button>
+          <el-button class="error-btn" type="primary" size="large" @click="goBack">返回</el-button>
       </div>
   </div>
 </template>

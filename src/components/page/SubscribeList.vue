@@ -2,14 +2,14 @@
     <section class="main">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> Monitor</el-breadcrumb-item>
-                <el-breadcrumb-item>Subscriptions</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> 后台管理</el-breadcrumb-item>
+                <el-breadcrumb-item>后台监听</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="drag-box">
                 <div class="drag-box-item">
-                    <div class="item-title">Subscribed</div>
+                    <div class="item-title">已监听</div>
                     <draggable v-model="subscribed" @remove="removeHandle" :options="dragOptions">
                         <transition-group tag="div" id="subscribed" class="item-ul">
                             <div v-for="item in subscribed" class="drag-list" :key="item.id">
@@ -19,7 +19,7 @@
                     </draggable>
                 </div>
                 <div class="drag-box-item">
-                    <div class="item-title">Unsubscribed</div>
+                    <div class="item-title">未监听</div>
                     <draggable v-model="unsubscribed" @remove="removeHandle" :options="dragOptions">
                         <transition-group tag="div" id="unsubscribed" class="item-ul">
                             <div v-for="item in unsubscribed" class="drag-list" :key="item.id">
@@ -33,40 +33,40 @@
                         <el-table-column type="expand">
                             <template slot-scope="props">
                                 <el-form label-position="left" inline class="subscribe-table-expand">
-                                    <el-form-item label="Block Hash">
+                                    <el-form-item label="区块哈希">
                                         <span>{{ props.row.blockHash }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Block Number">
+                                    <el-form-item label="区块编号">
                                         <span>{{ props.row.blockNumber }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Transaction Hash">
+                                    <el-form-item label="交易哈希">
                                         <span>{{ props.row.hash }}</span>
                                     </el-form-item>
-                                    <el-form-item label="From">
+                                    <el-form-item label="发送者">
                                         <span>{{ props.row.from }}</span>
                                     </el-form-item>
-                                    <el-form-item label="To">
+                                    <el-form-item label="交易对象">
                                         <span>{{ props.row.to }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Gas Paid">
+                                    <el-form-item label="Gas消耗">
                                         <span>{{ props.row.gas}}</span>
                                     </el-form-item>
                                     <el-form-item label="Nonce">
                                         <span>{{ props.row.nonce }}</span>
                                     </el-form-item>
-                                    <el-form-item label="Input">
+                                    <el-form-item label="输入">
                                         <span class="script">{{ props.row.input }}</span>
                                     </el-form-item>
                                 </el-form>
                             </template>
                         </el-table-column>
-                        <el-table-column label='Transaction Hash'>
+                        <el-table-column label='交易哈希'>
                             <template slot-scope="scope">
                                 <span class="message-title">{{scope.row.hash}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="from" label='From'></el-table-column>
-                        <el-table-column prop="to" label='To'></el-table-column>
+                        <el-table-column prop="from" label='发送者'></el-table-column>
+                        <el-table-column prop="to" label='交易对象'></el-table-column>
                     </el-table>
                 </div>
             </div>

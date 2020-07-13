@@ -2,23 +2,23 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-group"></i> Permission Management</el-breadcrumb-item>
-                <el-breadcrumb-item>Properties</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-group"></i> 权限管理</el-breadcrumb-item>
+                <el-breadcrumb-item>属性一览</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-input v-model="select_word" placeholder="Keyword" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="handleNew">New</el-button>
+                <el-input v-model="select_word" placeholder="关键词" class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="search" @click="handleNew">新建属性</el-button>
             </div>
             <el-table :data="data" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column prop="name" label="Property Name" sortable>
+                <el-table-column prop="name" label="属性名" sortable>
                 </el-table-column>
-                <el-table-column prop="address" label="Contract Address" :formatter="formatter">
+                <el-table-column prop="address" label="合约地址" :formatter="formatter">
                 </el-table-column>
-                <el-table-column label="Options" width="80" align="center">
+                <el-table-column label="操作" width="80" align="center">
                     <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleAssign(scope.$index, scope.row)" :disabled="checkDisabled()">Assign</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleAssign(scope.$index, scope.row)" :disabled="checkDisabled()">授予权限</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -29,15 +29,15 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="New Property" :visible.sync="createVisible" width="30%">
+        <el-dialog title="新建属性" :visible.sync="createVisible" width="30%">
             <el-form ref="form" :model="create" label-width="80px">
-                <el-form-item label="Name">
+                <el-form-item label="名称">
                     <el-input v-model="create.name"></el-input>
                 </el-form-item>
-                <el-form-item label="Existed Contract" v-if="false">
+                <el-form-item label="已有合约" v-if="false">
                     <el-switch v-model="create.useTemplate" disabled="false"></el-switch>
                     <el-tooltip class="item" effect="dark" placement="right">
-                        <div slot="content">The contract should satisfy:
+                        <div slot="content">需满足以下ABI:
                             <br>[{
                             <br>&emsp;&emsp;"constant":true,
                             <br>&emsp;&emsp;"inputs":[{"name":"_id","type":"string"}],
@@ -90,38 +90,38 @@
                         <i class="el-icon-question"></i>
                     </el-tooltip>
                 </el-form-item>
-                <el-form-item label="Address" v-show="create.useTemplate">
+                <el-form-item label="合约地址" v-show="create.useTemplate">
                     <el-input v-model="create.address"></el-input>
                 </el-form-item>
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="createVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="applyNew">Confirm</el-button>
+                <el-button @click="createVisible = false">取消</el-button>
+                <el-button type="primary" @click="applyNew">发送申请</el-button>
             </span>
 
         </el-dialog>
 
-        <el-dialog title="Assign" :visible.sync="assignVisible" width="30%">
+        <el-dialog title="授予权限" :visible.sync="assignVisible" width="30%">
             <el-form ref="form" :model="form" label-width="120px">
-                <el-form-item label="Target Role">
+                <el-form-item label="目标角色">
                     <el-select v-model="form.name">
                         <el-option v-for="(address, name) in roles" :value="name" :key="name" name="form.name">
                                 {{name}}
                             </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Permission Type">
+                <el-form-item label="权限类型">
                     <el-select v-model="form.type">
-                        <el-option key="1" label="Read" value="Read"></el-option>
-                        <el-option key="2" label="Write" value="Write"></el-option>
+                        <el-option key="1" label="读权限" value="Read"></el-option>
+                        <el-option key="2" label="写权限" value="Write"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="assignVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="applyAssign">Confirm</el-button>
+                <el-button @click="assignVisible = false">取消</el-button>
+                <el-button type="primary" @click="applyAssign">确定</el-button>
             </span>
 
         </el-dialog>

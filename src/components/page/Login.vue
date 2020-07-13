@@ -1,22 +1,22 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">IoT Data Management System for Supply Chain</div>
+            <div class="ms-title">溯源数据管理系统</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                    <el-input v-model="ruleForm.username" placeholder="账户地址">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
+                    <el-input type="password" placeholder="密码" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">Login</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
-                <p class="login-tips">Tips : Log in with ETH account.<router-link to="register" style="float:right;color: #fff;">申请正式注册</router-link></p>
+                <p class="login-tips">Tips: 使用钱包账户登录<router-link to="register" style="float:right;color: #fff;">申请成为正式用户</router-link></p>
             </el-form>
         </div>
     </div>
