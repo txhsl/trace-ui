@@ -97,7 +97,7 @@
 
             <span slot="footer" class="dialog-footer">
                 <el-button @click="createVisible = false">取消</el-button>
-                <el-button type="primary" @click="applyNew">发送申请</el-button>
+                <el-button type="primary" @click="applyNew">确定</el-button>
             </span>
 
         </el-dialog>
